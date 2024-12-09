@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 <body>
-    
+
+    <main class="main">
+
+        <section class="dashboard">
+            <div class="dashboard__sidebar">
+                <button class="new-task-btn">New Task</button>
+                <button class='all-tasks-btn'>All Tasks</button>
+                <button class='priorities-btn'>Priorities</button>
+
+
+                <div class="dashboard__sidebar__lists">
+                    <h3>Lists</h3>
+                    <ul>
+                        <li>Create New List</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dashboard__contents">
+                <div class="dashboard__page-load">
+                    <h3>welcome to task mananager!</h3>
+                    <p>click on new Task to begin</p>
+                </div>
+
+            </div>
+            <div class="dashboard__utilities">
+
+            </div>
+        </section>
+        <section class="modal">
+            <form class="modal__form">
+
+            </form>
+        </section>
+
+
+    </main>
+
 </body>
-</html>
+
+
+
+</html>            
+
+
+<!--
+
+<form>
+    <input type="text" placeholder="Add Title">
+    <input type="date" placeholder="dec 5">
+    <textarea class="textarea" placeholder="details"></textarea>
+    <input type="submit" value="save" class="dashboard__new-task-form__submit">
+</form>
+
+-->
