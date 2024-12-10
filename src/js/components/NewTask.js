@@ -14,13 +14,6 @@ export class NewTask {
 
     clickNewTask() {
         const Btn = document.querySelector('.new-task-btn')
-       let placeholder = {
-            title: 'New Title',
-            date: '',
-            details: 'details',
-            submit: null
-        }
-
         Btn.addEventListener('click', () => {
             this.domCreate('.modal__form');
             this.dataSubmit();
@@ -30,15 +23,16 @@ export class NewTask {
     
     domCreate(location) {
         const form = document.querySelector(location)
-
         let fields = [
-            {tag: 'input', type: 'text', placeholder: taskData.title, className: 'fields'},
-            {tag: 'input', type: 'date', placeholder: taskData.date, className: 'fields'},
-            {tag: 'textarea', placeholder: taskData.details, className: 'fields'},
+            {tag: 'input', type: 'text', placeholder: 'placeholder', className: 'fields'},
+            {tag: 'input', type: 'date', placeholder: 'placeholder', className: 'fields'},
+            {tag: 'textarea', placeholder: 'placeholder', className: 'fields'},
             {tag: 'input', type: 'submit', value: 'save', className: 'field4'}
         ]
 
-        fields.forEach(({ tag, type, placeholder, value, className }) => {
+
+
+        fields.forEach(({ tag, type, placeholder, value, className }, index) => {
             let element
             element = document.createElement(tag)
             if (type) element.type = type; 
@@ -64,5 +58,5 @@ export class NewTask {
             console.log(getData)
 
         });
-    };       
+    };
 };
