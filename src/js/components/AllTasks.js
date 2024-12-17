@@ -1,10 +1,8 @@
 
 
 //factory syntax
-import { taskDataObj, dataRetrieve } from "./taskData";
-import { NewTask } from "./NewTask";
+import { dataRetrieve } from "./taskData";
 
-let taskData = taskDataObj;
 let getData = dataRetrieve
 
 
@@ -22,7 +20,8 @@ export class AllTasks {
             {tag: 'input', type: 'text', className: 'allTasksInput1'},
             {tag: 'input', type: 'date', className: 'allTasksInput2'},
             {tag: 'textarea', className: 'allTasksInput3'},
-            {tag: 'input', type: 'submit', value: 'save', className: 'allTasksInput4'}
+            {tag: 'input', type: 'submit', value: 'save', className: 'allTasksInput4'},
+            {tag: 'button', className: 'priorityTask'}
         ]
 
         let input
@@ -32,6 +31,7 @@ export class AllTasks {
             input.classList.add('allTasksInputs', className)
             if (type) { input.type = type }
             if (value) { input.value = value }
+            if (tag == 'button') { input.textContent = 'Make Priority'}
             fieldContainer.append(input)
 
             for (let i = 0; i < getData.length; i++) {
@@ -40,6 +40,13 @@ export class AllTasks {
                 input.placeholder = array[index];
             };
 
+
+
         });
     };
+
+
+
+
+
 }

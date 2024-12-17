@@ -1,12 +1,15 @@
 
 //factory syntax
-import { taskDataObj, dataRetrieve } from "./taskData";
+import { taskDataObj, dataRetrieve, priorityTasksData } from "./taskData";
 let taskData = taskDataObj
 let getData = dataRetrieve
+let getPrioties = priorityTasksData
 
 
+
+
+//class syntax
 import { AllTasks } from "./AllTasks";
-
 let allTasks = new AllTasks
 
 
@@ -65,11 +68,32 @@ export class NewTask {
             
             let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
             getData.push(taskDataInstance)
+
             const modalForm = document.querySelector('.modal__form')
+
             modalForm.remove()
             allTasks.tasksList()
+            this.clickPriorityTask(taskDataInstance)
+        
             console.log(getData)
 
         });
     };
+
+    clickPriorityTask(taskDataInstance) {
+        const makePrioty = document.querySelector('.priorityTask')
+        makePrioty.addEventListener('click', (e) => {
+
+            getPrioties.push(taskDataInstance)
+
+
+          //  const { title, date, details } = taskDataInstance
+
+
+            console.log(getPrioties)
+            makePrioty.style['background-color'] = 'red';
+        })
+    }
+
+
 };
