@@ -2,7 +2,6 @@
 import { taskDataObj, dataRetrieve } from "./taskData";
 import { NewTask } from "./NewTask";
 
-let task = new NewTask;
 
 
 
@@ -12,17 +11,21 @@ let taskData = taskDataObj;
 let getData = dataRetrieve
 
 export class AllTasks {
-    domRemove() {
+
+    domReplace() {
         const allTasksBtn = document.querySelector('.all-tasks-btn')
         allTasksBtn.addEventListener('click', (e) => {
             const dashboardPageLoad = document.querySelector('.dashboard__page-load')
+            /*
             if (dashboardPageLoad) {
                 dashboardPageLoad.remove();
                 this.tasksList()
             }
             else {
-               this.tasksList()
             }
+            */
+            this.tasksList()
+
             console.log(getData)
         });
     }
@@ -30,6 +33,10 @@ export class AllTasks {
 
     tasksList() {
         const contents = document.querySelector('.dashboard__contents')
+        const fieldContainer = document.createElement('div')
+        fieldContainer.classList.add('singular-task')
+        contents.append(fieldContainer)
+
  
         let fields = [
             {tag: 'input', type: 'text', className: 'allTasksInput1'},
@@ -45,7 +52,7 @@ export class AllTasks {
             input.classList.add('allTasksInputs', className)
             if (type) { input.type = type }
             if (value) { input.value = value }
-            contents.append(input)
+            fieldContainer.append(input)
 
             for (let i = 0; i < getData.length; i++) {
                 const { title, date, details } = getData[i];
@@ -56,4 +63,3 @@ export class AllTasks {
         });
     };
 }
-

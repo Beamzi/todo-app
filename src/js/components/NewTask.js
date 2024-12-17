@@ -14,7 +14,13 @@ export class NewTask {
 
     clickNewTask() {
         const Btn = document.querySelector('.new-task-btn')
+
+
         Btn.addEventListener('click', () => {
+            const modal = document.querySelector('.modal')
+            const modalForm = document.createElement('form')
+            modal.append(modalForm)
+            modalForm.classList.add('modal__form')
             this.domCreate('.modal__form');
             this.dataSubmit();
         });
@@ -23,6 +29,7 @@ export class NewTask {
     
     domCreate(location) {
         const form = document.querySelector(location)
+        
         let fields = [
             {tag: 'input', type: 'text', placeholder: 'placeholder', className: 'fields'},
             {tag: 'input', type: 'date', placeholder: 'placeholder', className: 'fields'},
@@ -55,6 +62,8 @@ export class NewTask {
             
             let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
             getData.push(taskDataInstance)
+            const modalForm = document.querySelector('.modal__form')
+            modalForm.remove()
             console.log(getData)
 
         });
