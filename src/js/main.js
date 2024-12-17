@@ -6,4 +6,4 @@ const task = new NewTask
 const allTasks = new AllTasks
 
 task.clickNewTask();
-allTasks.domReplace();
+allTasks.allTasksDisplay();

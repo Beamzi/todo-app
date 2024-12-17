@@ -1,36 +1,16 @@
 
+
+//factory syntax
 import { taskDataObj, dataRetrieve } from "./taskData";
 import { NewTask } from "./NewTask";
 
-
-
-
-
 let taskData = taskDataObj;
-
 let getData = dataRetrieve
 
+
+
+
 export class AllTasks {
-
-    domReplace() {
-        const allTasksBtn = document.querySelector('.all-tasks-btn')
-        allTasksBtn.addEventListener('click', (e) => {
-            const dashboardPageLoad = document.querySelector('.dashboard__page-load')
-            /*
-            if (dashboardPageLoad) {
-                dashboardPageLoad.remove();
-                this.tasksList()
-            }
-            else {
-            }
-            */
-            this.tasksList()
-
-            console.log(getData)
-        });
-    }
-
-
     tasksList() {
         const contents = document.querySelector('.dashboard__contents')
         const fieldContainer = document.createElement('div')

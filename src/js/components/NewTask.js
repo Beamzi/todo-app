@@ -1,9 +1,13 @@
 
-
+//factory syntax
 import { taskDataObj, dataRetrieve } from "./taskData";
-
 let taskData = taskDataObj
 let getData = dataRetrieve
+
+
+import { AllTasks } from "./AllTasks";
+
+let allTasks = new AllTasks
 
 
 export class NewTask {
@@ -14,8 +18,6 @@ export class NewTask {
 
     clickNewTask() {
         const Btn = document.querySelector('.new-task-btn')
-
-
         Btn.addEventListener('click', () => {
             const modal = document.querySelector('.modal')
             const modalForm = document.createElement('form')
@@ -23,6 +25,7 @@ export class NewTask {
             modalForm.classList.add('modal__form')
             this.domCreate('.modal__form');
             this.dataSubmit();
+
         });
     };
 
@@ -64,6 +67,7 @@ export class NewTask {
             getData.push(taskDataInstance)
             const modalForm = document.querySelector('.modal__form')
             modalForm.remove()
+            allTasks.tasksList()
             console.log(getData)
 
         });
