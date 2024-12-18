@@ -1,9 +1,14 @@
-import { dataRetrieve } from "./taskData"
+import { priorityTasksData } from "./taskData"
 
-let getData = dataRetrieve;
+let getPrioties = priorityTasksData
 
 export class PriorityTask {
     constructor() {
     }
 
-}
+    
+
+
+
+
+};

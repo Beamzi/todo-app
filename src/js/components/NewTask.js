@@ -75,24 +75,21 @@ export class NewTask {
             allTasks.tasksList()
             this.clickPriorityTask(taskDataInstance)
         
-            console.log(getData)
+           // console.log(getData)
 
         });
     };
 
     clickPriorityTask(taskDataInstance) {
-        const makePrioty = document.querySelector('.priorityTask')
-        makePrioty.addEventListener('click', (e) => {
+        const makePriority = document.querySelectorAll('.priorityTask')
+        makePriority.forEach((element) => {
+            element.addEventListener('click', (e) => {
+                getPrioties.push(taskDataInstance)
+                console.log(getPrioties)
+            })
 
-            getPrioties.push(taskDataInstance)
-
-
-          //  const { title, date, details } = taskDataInstance
-
-
-            console.log(getPrioties)
-            makePrioty.style['background-color'] = 'red';
         })
+
     }
 
 

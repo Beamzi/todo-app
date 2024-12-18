@@ -1,7 +1,6 @@
 
 
 
-
 // returns the object, stored into object instances
 export function taskDataObj (title, date, details) {
     return {

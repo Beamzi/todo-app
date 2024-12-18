@@ -31,7 +31,14 @@ export class AllTasks {
             input.classList.add('allTasksInputs', className)
             if (type) { input.type = type }
             if (value) { input.value = value }
-            if (tag == 'button') { input.textContent = 'Make Priority'}
+            if (tag == 'button') { 
+                input.textContent = 'Make Priority'
+                input.addEventListener('click', () => {
+                    input.style['background-color'] = 'red';
+                    fieldContainer.classList.add('priority')
+                })
+
+            }
             fieldContainer.append(input)
 
             for (let i = 0; i < getData.length; i++) {
