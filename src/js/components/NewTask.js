@@ -1,12 +1,9 @@
 
 //factory syntax
-import { taskDataObj, dataRetrieve, priorityTasksData, isClicked } from "./taskData";
+import { taskDataObj, dataRetrieve, priorityTasksData, isClicked, nextInstance } from "./taskData";
 let taskData = taskDataObj
 let getData = dataRetrieve
-let getPriorities = priorityTasksData
-
-
-
+let getPriorityData = priorityTasksData
 
 //class syntax
 import { AllTasks } from "./AllTasks";
@@ -29,13 +26,9 @@ export class NewTask {
             modalForm.classList.add('modal__form')
             this.domCreate('.modal__form');
             this.dataSubmit();
-
-
         });
     };
 
-
-    
     domCreate(location) {
         const form = document.querySelector(location)
         let fields = [
@@ -44,7 +37,6 @@ export class NewTask {
             {tag: 'textarea', placeholder: 'details', className: 'fields'},
             {tag: 'input', type: 'submit', value: 'save', className: 'submit'}
         ]
-
 
         fields.forEach(({ tag, type, placeholder, value, className }, index) => {
             let element
@@ -57,6 +49,11 @@ export class NewTask {
         });
     };
 
+    nextInstance() {
+        let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
+        return taskDataInstance
+    }
+    
     dataSubmit() {
         const submit = document.querySelector('.submit')
         submit.addEventListener('click', (event) => {
@@ -66,32 +63,42 @@ export class NewTask {
             fields.forEach((field, index) => {
                 this.form[keys[index]] = field.value;
             });
-            
-            let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
-            getData.push(taskDataInstance)
 
-            const modalForm = document.querySelector('.modal__form')
-            modalForm.remove()
-            allTasks.tasksList()
+            getData.push(this.nextInstance())
+            this.domRemove()
+           allTasks.tasksList()
+         //  allTasks.clickAllTasks();
 
 
-            if (isClicked[0] === 'clicked') {
-                this.clicked();
-            }
+           /*
+           if (isClicked < 1) {
+            isClicked.push('clicked')
+        }
 
-
+        if (isClicked[0] === 'clicked') { 
+            this.clicked()
+            console.log(isClicked)
+        };
+        */              
         });
     };
-
+    domRemove() {
+        const modalForm = document.querySelector('.modal__form')
+        modalForm.remove()
+    }
+    /*
     clicked() {
         const allTasksBtn = document.querySelector('.all-tasks-btn')
-            allTasksBtn.click();   
+        allTasksBtn.click();
     }
 
-    
-
-    
-
+    clickCheck() {
+        const allTasksBtn = document.querySelector('.all-tasks-btn')
+        allTasksBtn.addEventListener('click', () => {
+        })
+    }
+        */
+        
         
 
 };

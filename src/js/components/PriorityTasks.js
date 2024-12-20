@@ -1,26 +1,25 @@
-import { priorityTasksData } from "./taskData"
+import { priorityTasksData, dataRetrieve } from "./taskData"
 
 let getPriorityData = priorityTasksData
+let getData = dataRetrieve
 
 export class PriorityTask {
     constructor() {
     }
 
     clickPriorityTasks() {
-
         const priorityTasksBtn = document.querySelector('.priorities-btn')
         priorityTasksBtn.addEventListener('click', () => {
-            console.log(getPriorityData, 'getprioritydata')
+           // console.log(getPriorityData, 'getprioritydata')
 
           // const allTasksContainer = document.querySelector('.all-tasks__container')
         //   allTasksContainer.remove();
-         //  this.domCreatePriorityTasks();
+           this.domCreatePriorityTasks();
 
        });
     };
 
     domCreatePriorityTasks() {
-
         const singularPriorityTask = document.createElement('div')
         singularPriorityTask.classList.add('singular-priority-task')
        // const dashboardContents = document.querySelector('.dashboard__contents')
@@ -43,10 +42,7 @@ export class PriorityTask {
             input.classList.add(className)
             if (type) { input.type = type }
             singularPriorityTask.append(input)
-
         });
-
-
 
 
     };

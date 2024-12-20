@@ -10,11 +10,13 @@ export function taskDataObj (title, date, details) {
     }
 }
 
+
+
 //stores the object Instances one at a time
 export let dataRetrieve = [];
 
 // recevies copies of the object instances that are 'priortised'
 export let priorityTasksData = [];
 
-
 export let isClicked = [];
+
