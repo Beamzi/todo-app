@@ -10,12 +10,6 @@ const priorityTask = new PriorityTask;
 
 task.clickNewTask();
 
-priorityTask.priorityTasksDisplay();
-
-//priorityTask.clickPriorityTask();
-
-//allTasks.allTasksDisplay()
+priorityTask.clickPriorityTasks()
 
 
-
- 

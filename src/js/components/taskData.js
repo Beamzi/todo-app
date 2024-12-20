@@ -15,3 +15,6 @@ export let dataRetrieve = [];
 
 // recevies copies of the object instances that are 'priortised'
 export let priorityTasksData = [];
+
+
+export let isClicked = [];

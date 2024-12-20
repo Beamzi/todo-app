@@ -43,6 +43,8 @@ main {
 }
 
 
+
+
 .dashboard {
     display: flex;
     >* {
@@ -93,7 +95,7 @@ main {
     flex-direction: column;
 }
 
-.singular-task{
+.singular-task {
     display: flex;
     flex-direction: column;
     background-color: grey;
@@ -104,4 +106,19 @@ main {
         border-style: none;
         padding: 5px;
     }
+}
+
+
+.singular-priority-task {
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+    padding: 20px;
+    > * {
+        margin: 2px;
+        border-radius: 7px;
+        border-style: none;
+        padding: 5px;
+    }
+
 }
