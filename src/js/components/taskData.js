@@ -2,7 +2,7 @@
 
 
 // returns the object, stored into object instances
-export function taskDataObj (title, date, details) {
+export function taskData (title, date, details) {
     return {
         title: title || 'title',
         date: date || 'date',
@@ -10,13 +10,9 @@ export function taskDataObj (title, date, details) {
     }
 }
 
-
-
 //stores the object Instances one at a time
-export let dataRetrieve = [];
+export let getData = [];
 
 // recevies copies of the object instances that are 'priortised'
-export let priorityTasksData = [];
-
-export let isClicked = [];
+export let getPriorityData = [];
 

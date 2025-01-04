@@ -16,10 +16,14 @@ const allTasks = new AllTasks
 import { PriorityTask } from './components/PriorityTasks.js';
 const priorityTask = new PriorityTask;
 
-task.clickNewTask();
-
-//allTasks.clickMakePriority()
 
 priorityTask.clickPriorityTasks()
+
+
+task.clickNewTask();
+
+
+
+
 
 

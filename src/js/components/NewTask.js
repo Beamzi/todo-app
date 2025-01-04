@@ -1,9 +1,10 @@
 
 //factory syntax
-import { taskDataObj, dataRetrieve, priorityTasksData, isClicked, nextInstance } from "./taskData";
-let taskData = taskDataObj
-let getData = dataRetrieve
-let getPriorityData = priorityTasksData
+import { taskData, getData, getPriorityData } from "./taskData";
+
+import { makePriorityBtn, allTasksBtn } from "./EventManager";
+
+
 
 //class syntax
 import { AllTasks } from "./AllTasks";
@@ -26,6 +27,7 @@ export class NewTask {
             modalForm.classList.add('modal__form')
             this.domCreate('.modal__form');
             this.dataSubmit();
+
         });
     };
 
@@ -37,12 +39,11 @@ export class NewTask {
             {tag: 'textarea', placeholder: 'details', className: 'fields'},
             {tag: 'input', type: 'submit', value: 'save', className: 'submit'}
         ]
-
         fields.forEach(({ tag, type, placeholder, value, className }, index) => {
             let element
             element = document.createElement(tag)
             if (type) element.type = type; 
-            if (value) element.value = value 
+            if (value) element.value = value
             element.placeholder = placeholder;
             element.classList.add(className)
             form.append(element)
@@ -53,9 +54,18 @@ export class NewTask {
         let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
         return taskDataInstance
     }
-    
+
+    idCount() {
+        if (this.dataSubmit) {
+            let num = 0
+            return num++
+        }
+    }
+
     dataSubmit() {
         const submit = document.querySelector('.submit')
+        const modal = document.querySelector('.modal')
+
         submit.addEventListener('click', (event) => {
             event.preventDefault()
             const keys = ['title', 'date', 'details']
@@ -63,42 +73,31 @@ export class NewTask {
             fields.forEach((field, index) => {
                 this.form[keys[index]] = field.value;
             });
-
             getData.push(this.nextInstance())
             this.domRemove()
-           allTasks.tasksList()
-         //  allTasks.clickAllTasks();
+
+            makePriorityBtn.splice(0, 1, true)
 
 
-           /*
-           if (isClicked < 1) {
-            isClicked.push('clicked')
-        }
+            allTasks.tasksList();
 
-        if (isClicked[0] === 'clicked') { 
-            this.clicked()
-            console.log(isClicked)
-        };
-        */              
-        });
+
+            console.log(getData, 'getData')
+            console.log(makePriorityBtn, 'makePriorityBtn')
+        }); 
     };
+
+
+
+
+
+
     domRemove() {
         const modalForm = document.querySelector('.modal__form')
         modalForm.remove()
     }
-    /*
-    clicked() {
-        const allTasksBtn = document.querySelector('.all-tasks-btn')
-        allTasksBtn.click();
-    }
 
-    clickCheck() {
-        const allTasksBtn = document.querySelector('.all-tasks-btn')
-        allTasksBtn.addEventListener('click', () => {
-        })
-    }
-        */
-        
+
         
 
 };
