@@ -12,11 +12,14 @@ let priorityTask = new PriorityTask
 
 export class AllTasks {
 
-
     tasksList() {
+        this.domRemove()
         const contents = document.querySelector('.dashboard__contents')
+        const allTasks = document.createElement('div')
+        allTasks.classList.add('all-tasks__container')
+        contents.append(allTasks)
+
         const allTasksContainer = document.querySelector('.all-tasks__container')
-        contents.append(allTasksContainer)
         const fieldContainer = document.createElement('div')
         fieldContainer.classList.add('singular-task')
 
@@ -32,42 +35,59 @@ export class AllTasks {
         let input
 
 
-        fields.forEach((element, index) => {
-            const { tag, type, value, className } = element;
-            input = document.createElement(tag)
-            input.classList.add('allTasksInputs', className)
-            if (type) { input.type = type }
-            if (value) { input.value = value }
-            if (tag == 'button') { 
-                input.textContent = 'Make Priority'
-              //  input.setAttribute('id', `makePriority${[idCount]}`)
-            };
+        for (let i = 0; i < getData.length; i++) {
+            fields.forEach((element, index) => {
+                const { tag, type, value, className } = element;
+                input = document.createElement(tag)
+                input.classList.add('allTasksInputs', className)
+                if (type) { input.type = type }
+                if (value) { input.value = value }
+                if (tag == 'button') { 
+                    input.textContent = 'Make Priority'};
 
-            for (let i = 0; i < getData.length; i++) {
+                if (getPriorityData[length] && tag === 'button') {
+                        input.classList.add('made-priority')
+                }
+
+                fieldContainer.append(input)
+
+
                 const { title, date, details } = getData[i];
                 let array = [title, date, details];
                 input.placeholder = array[index];
-            };
+            });
 
-           fieldContainer.append(input)
-        });
-        
+            allTasksContainer.append(fieldContainer)
+        };
 
-       allTasksContainer.append(fieldContainer)
+
+
        priorityTask.clickMakePriority();
+
     };
 
-
-
-    clickAllTasks(fieldContainer) {
+    
+    domRemove() {
         const allTasksContainer = document.querySelector('.all-tasks__container')
+        if (allTasksContainer) {
+            allTasksContainer.remove();
+        }
+        const priorityTasksContainer = document.querySelector('.priority-tasks__container')
+        if (priorityTasksContainer) {
+            priorityTasksContainer.remove();
+        }
+    }
+
+
+
+    clickAllTasks() {
+        const singularTask = document.querySelector('.singular-task')
         const allTasksBtn = document.querySelector('.all-tasks-btn')
         allTasksBtn.addEventListener('click', (e) => {
-            if (isClicked[0] === 'clicked') {
-                allTasksBtn.style['background-color'] = 'red'
-                allTasksContainer.append(fieldContainer)
-                this.clickMakePriority()
-            };
+
+            this.tasksList();
+
+
         });
     };
     

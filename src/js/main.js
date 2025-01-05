@@ -18,11 +18,8 @@ const priorityTask = new PriorityTask;
 
 
 priorityTask.clickPriorityTasks()
-
-
 task.clickNewTask();
-
-
+allTasks.clickAllTasks();
 
 
 

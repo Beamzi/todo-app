@@ -2,7 +2,7 @@
 //factory syntax
 import { taskData, getData, getPriorityData } from "./taskData";
 
-import { makePriorityBtn, allTasksBtn } from "./EventManager";
+import { makePriorityBtn, allTasksBtn, newTaskSubmit } from "./EventManager";
 
 
 
@@ -76,10 +76,9 @@ export class NewTask {
             getData.push(this.nextInstance())
             this.domRemove()
 
-            makePriorityBtn.splice(0, 1, true)
-
-
-            allTasks.tasksList();
+          //  makePriorityBtn.splice(0, 1, true)
+            const allTasksBtn = document.querySelector('.all-tasks-btn')
+            allTasksBtn.click();
 
 
             console.log(getData, 'getData')
