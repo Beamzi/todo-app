@@ -45,8 +45,14 @@ export class AllTasks {
                 if (tag == 'button') { 
                     input.textContent = 'Make Priority'};
 
-                if (getPriorityData[length] && tag === 'button') {
+                if (getPriorityData[i] && tag === 'button') {
                         input.classList.add('made-priority')
+                    
+
+                    /*
+                    else if (getPriorityData.length < getData.length) {
+                        let remainder = getData.length % getPriorityData.length
+                    }*/
                 }
 
                 fieldContainer.append(input)

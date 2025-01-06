@@ -1,6 +1,6 @@
 import { taskData, getData, getPriorityData } from "./taskData";
 
-import { makePriorityBtn, allTasksBtn, priorityTasksBtn } from "./EventManager"
+import { priorityMatch } from "./EventManager"
 
 export class PriorityTask {
     constructor() {}
@@ -9,8 +9,8 @@ export class PriorityTask {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
         priorityTasksBtn.addEventListener('click', () => {
             this.domCreatePriorityTasks();
-            console.log(makePriorityBtn)
             this.removePriority();
+
        });
     };
 
@@ -27,19 +27,50 @@ export class PriorityTask {
         });
     };
 
+
+    //????//
+    emptyPriorities() {
+        const singularPriorityTask = document.querySelector('.singular-priority-task')
+        singularPriorityTask.remove();
+        this.renderPriority();
+    }
+
+
+
     removePriority() {
         const removeBtn = document.querySelectorAll('.remove-priority')
         removeBtn.forEach((btn, index) => {
             if (removeBtn) {
                 btn.addEventListener('click', (e) => {
-                    let amount = 0
+                   let  validIndices = []
+                    for (let i = 0; i < getPriorityData.length; i++) {
+                        if (getPriorityData[i] !== undefined) {
+                            validIndices.push(i)
+                        };
+                    };
+                    getPriorityData.splice(validIndices[index], 1, undefined)
+                    console.log(getPriorityData)
+                    this.renderPriority();
+                });
+            };
+        });
+    };
+
+    /*
+
+    removePriority() {
+        const removeBtn = document.querySelectorAll('.remove-priority')
+        removeBtn.forEach((btn, index) => {
+            if (removeBtn) {
+                btn.addEventListener('click', (e) => {
+                    let amount = 1
                     for (let i = 0; i < getPriorityData.length; i++) {
                         if (getPriorityData[i] === undefined) amount++
                     }
                     if (getPriorityData[index] === undefined) {
                         getPriorityData.splice(index, amount)
                     }
-                    if (getPriorityData[index]) getPriorityData.splice(index, 1) 
+                    if (getPriorityData[index]) getPriorityData.splice(index, 1, undefined) 
 
                 console.log(getPriorityData)
                 this.renderPriority();
@@ -47,6 +78,9 @@ export class PriorityTask {
             };
         });
     };
+
+     */
+
 
     renderPriority() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
@@ -89,15 +123,22 @@ export class PriorityTask {
               //let input 
                 if (getPriorityData[i]) {
                     const { tag, type, className, value } = field
-                   let  input = document.createElement(tag)
+                    let  input = document.createElement(tag)
                     if (value) { input.value = value}
                     input.classList.add(className)
                     if (type) { input.type = type }
                     singularPriorityTask.append(input)
-            
+                    if (value === 'remove') {
+                        input.classList.add(`remove-index${i}`)
+                        priorityMatch[i] = i
+                    }
+
                     const { title, date, details } = getPriorityData[i];
+                   // let save = i
+                  //  let remove = i
                     let array = [title, date, details];
                     input.placeholder = array[index];
+
 
                 };
             });
