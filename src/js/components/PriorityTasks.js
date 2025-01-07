@@ -1,15 +1,22 @@
-import { taskData, getData, getPriorityData } from "./taskData";
+import { getData, getPriorityData } from "./taskData";
 
-import { validPriorities, priorityMatch } from "./EventManager"
+
+import { DOMRemove } from "./DOMRemove";
+const domRemove = new DOMRemove
+
 
 export class PriorityTask {
     constructor() {}
 
+
+
     clickPriorityTasks() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
         priorityTasksBtn.addEventListener('click', () => {
-            this.checkEmpty();
+            this.classToggle();
+            domRemove.checkEmpty();
             this.noPriorities();
+            domRemove.containerRemove()
             this.domCreatePriorityTasks();
             this.removePriority();
 
@@ -29,19 +36,11 @@ export class PriorityTask {
         });
     };
 
-    checkEmpty() {
-        const emptyWindow = document.querySelector('.emptyPriorities')
-        if (emptyWindow) {
-            emptyWindow.remove()
-        }
-    }
-
-    
-
     removePriority() {
         const removeBtn = document.querySelectorAll('.remove-priority')
         removeBtn.forEach((btn, index) => {
-            this.checkEmpty();
+            //checkEmpty called specifically for remove event
+            domRemove.checkEmpty();
             if (removeBtn) {
                 btn.addEventListener('click', (e) => {
                    let  validIndices = []
@@ -76,19 +75,7 @@ export class PriorityTask {
         priorityTasksBtn.click()
     }
 
-    domRemove() {
-        const allTasksContainer = document.querySelector('.all-tasks__container')
-        if (allTasksContainer) {
-            allTasksContainer.remove();
-        }
-        const priorityTasksContainer = document.querySelector('.priority-tasks__container')
-        if (priorityTasksContainer) {
-            priorityTasksContainer.remove();
-        }
-    }
-
     noPriorities() {
-
         const dashBoard = document.querySelector('.dashboard__contents')
         let emptyWindow = document.createElement('div')
         emptyWindow.classList.add('emptyPriorities')
@@ -97,17 +84,13 @@ export class PriorityTask {
         dashBoard.append(emptyWindow)
     }
 
-
     domCreatePriorityTasks() {
-        this.domRemove();
         const contents = document.querySelector('.dashboard__contents')
-
         const priorityTasks = document.createElement('div')
         priorityTasks.classList.add('priority-tasks__container')
         priorityTasks.innerHTML = `<h3>Priority Tasks</h3>`
         contents.prepend(priorityTasks)
         
-
         const singularPriorityTask = document.createElement('div')
         singularPriorityTask.classList.add('singular-priority-task')
 
@@ -146,6 +129,11 @@ export class PriorityTask {
         console.log(getPriorityData, 'getPriorityData')
     };
 
+    classToggle() {
+        const priorityTasksBtn = document.querySelector('.priorities-btn')
+        priorityTasksBtn.classList.add('priority-tasks-active')
+        const allTasksBtn = document.querySelector('.all-tasks-btn')
+        allTasksBtn.classList.remove('all-tasks-active')
+    }
+
 };
-
-

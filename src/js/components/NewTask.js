@@ -17,6 +17,11 @@ export class NewTask {
         }
     }
 
+    classToggle() {
+        const Btn = document.querySelector('.new-task-btn')
+        Btn.classList.add('new-task-trigger')
+    }
+
     clickNewTask() {
         const Btn = document.querySelector('.new-task-btn')
         Btn.addEventListener('click', (event) => {
@@ -25,6 +30,7 @@ export class NewTask {
             const modalForm = document.createElement('form')
             modal.append(modalForm)
             modalForm.classList.add('modal__form')
+            this.classToggle();
             this.domCreate('.modal__form');
             this.dataSubmit();
 
@@ -34,6 +40,7 @@ export class NewTask {
     domCreate(location) {
         const form = document.querySelector(location)
         let fields = [
+            {tag: 'h3', className: 'modal-heading'},
             {tag: 'input', type: 'text', placeholder: 'title', className: 'fields'},
             {tag: 'input', type: 'date', placeholder: '', className: 'fields'},
             {tag: 'textarea', placeholder: 'details', className: 'fields'},
@@ -44,6 +51,7 @@ export class NewTask {
             element = document.createElement(tag)
             if (type) element.type = type; 
             if (value) element.value = value
+            if (tag === 'h3') element.textContent = 'Create a New Task';
             element.placeholder = placeholder;
             element.classList.add(className)
             form.append(element)

@@ -1,26 +1,36 @@
 
 
 
-import { taskData, getData, getPriorityData } from "./taskData";
-
-
+import { getData, getPriorityData } from "./taskData";
 
 import { PriorityTask } from "./PriorityTasks";
-let priorityTask = new PriorityTask
+const priorityTask = new PriorityTask
 
-
+import { DOMRemove } from "./DOMRemove";
+const domRemove = new DOMRemove
 
 export class AllTasks {
 
+
+    clickAllTasks() {
+        const allTasksBtn = document.querySelector('.all-tasks-btn')
+        allTasksBtn.addEventListener('click', (e) => {
+            this.classToggle();
+            domRemove.checkEmpty();
+            this.noTasks();
+            domRemove.containerRemove();
+            this.tasksList();
+
+        });
+    };
+
     tasksList() {
         const contents = document.querySelector('.dashboard__contents')
-        this.checkEmpty();
-        this.domRemove()
         const allTasks = document.createElement('div')
         allTasks.classList.add('all-tasks__container')
         allTasks.innerHTML = `<h3>All Tasks</h3>`
+        contents.prepend(allTasks)
 
-        contents.append(allTasks)
         const fieldContainer = document.createElement('div')
         fieldContainer.classList.add('singular-task')
  
@@ -49,45 +59,40 @@ export class AllTasks {
                 let array = [title, date, details];
                 input.placeholder = array[index];
             });
+
+            domRemove.checkEmpty();
             allTasks.append(fieldContainer)
         };
+
        priorityTask.clickMakePriority();
     };
 
 
-    checkEmpty() {
-        const emptyWindow = document.querySelector('.emptyPriorities')
-        if (emptyWindow) {
-            emptyWindow.remove()
-        }
+    classToggle() {
+        const priorityTasksBtn = document.querySelector('.priorities-btn')
+        priorityTasksBtn.classList.remove('priority-tasks-active')
+        const allTasksBtn = document.querySelector('.all-tasks-btn')
+        allTasksBtn.classList.add('all-tasks-active')
     }
+
+
+    noTasks() {
+       // const singularTask = document.querySelector('.singular-task')
+        const dashboard = document.querySelector('.dashboard__contents')
+        let allTasksEmpty = document.createElement('div')
+        allTasksEmpty.classList.add('empty-all-tasks')
+        allTasksEmpty.innerHTML = `<h3>:( no tasks here yet</h3>
+        <p>get started by clicking New Task</p>`;
+        dashboard.append(allTasksEmpty)
+    }
+
 
     
-    domRemove() {
-        const allTasksContainer = document.querySelector('.all-tasks__container')
-        if (allTasksContainer) {
-            allTasksContainer.remove();
-        }
-        const priorityTasksContainer = document.querySelector('.priority-tasks__container')
-        if (priorityTasksContainer) {
-            priorityTasksContainer.remove();
-        }
-    }
 
 
 
 
 
-    clickAllTasks() {
-        const singularTask = document.querySelector('.singular-task')
-        const allTasksBtn = document.querySelector('.all-tasks-btn')
-        allTasksBtn.addEventListener('click', (e) => {
-
-            this.tasksList();
-
-
-        });
-    };
     
 
 };

@@ -34,33 +34,95 @@ p, span {
     font-family: monospace;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-}
 
 
 
 
 .dashboard {
     display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
     >* {
-        border: 3px red solid;
+        border: 3px rgba(255, 255, 255, 0) solid;
+        margin: 5px;
+        border-radius: 10px;
     }
 }
-.dashboard__contents {
-    min-width: 300px;
-}
+
 
 .dashboard__utilities {
     min-width: 50px;
 }
+.dashboard__sidebar {
+    display:flex;
+    flex-direction: column;
+    background-color: rgb(83, 83, 83);
+    padding: 20px 0px 20px 0px;
+    .dashboard-buttons {
+        border: 0px black solid;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 5px 10px 5px 10px;
+    }
+}
+
+.dashboard__utilities {
+    background-color: rgb(83, 83, 83)
+    
+
+}
+
+.header {
+    min-height: 50px
+}
+
+.priority-tasks-active, .all-tasks-active {
+    background-color: black;
+    color: white;
+}
+
+.overlay {
+    background: rgb(139,139,139);
+    background: linear-gradient(4deg, rgb(255, 255, 255) 0%, rgb(199, 199, 199) 100%);
+    width: 100%;
+
+
+}
+
+.dashboard__contents {
+    background-color: white;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.emptyPriorities, .empty-all-tasks {
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.all-tasks__container, .priority-tasks__container, .welcome__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
 
 .dashboard__tasks__new-task {
-    border: 3px red solid;
     padding-bottom: 5px;
     margin-left: 15px;
     display: flex;
@@ -68,18 +130,26 @@ main {
     > * {
         margin: 5px;
     }
-
-
 }
 
+
+
+
 .modal__form {
-    border: 3px red solid;
+    position: fixed; 
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 50%;
+    border-radius: 15px;
     min-height: 200px;
     min-width: 300px;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    background-color: grey;
+    background-color: rgb(177, 177, 177);
     padding: 20px;
+    z-index: 100;
+    box-shadow: 10px 10px 500px 200px;
 
     >* {
         margin: 2px;
@@ -87,42 +157,59 @@ main {
         border-style: none;
         padding: 5px;
     }
+    h3 {
+        text-align: center;
+        color: rgb(0, 0, 0);
+        /*
+        text-shadow: black 1px 1px 3px; */
+        padding-bottom: 20px;
+    }
 
 }
 
-.dashboard__sidebar {
-    display:flex;
-    flex-direction: column;
-}
 
 .singular-task {
+    width: 100% !important;
     display: flex;
     flex-direction: column;
-    background-color: grey;
     padding: 20px;
+    padding-bottom: 20px;
+
     > * {
-        margin: 2px;
+        background-color: rgb(219, 219, 219);
+        margin: 3px;
         border-radius: 7px;
         border-style: none;
-        padding: 5px;
+        padding: 8px;
+    }
+    button {
+        margin-bottom: 30px;
     }
 }
 
 
 .singular-priority-task {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: grey;
     padding: 20px;
     > * {
-        margin: 2px;
+        background-color: rgb(219, 219, 219);
+        margin: 3px;
         border-radius: 7px;
         border-style: none;
-        padding: 5px;
+        padding: 8px;
+    }
+    .remove-priority {
+        margin-bottom: 30px;
     }
 
 }
 
+
+
+/* this is really important */
 .made-priority {
     background-color: red;
 }
+
