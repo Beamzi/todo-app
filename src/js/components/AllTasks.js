@@ -13,16 +13,16 @@ let priorityTask = new PriorityTask
 export class AllTasks {
 
     tasksList() {
-        this.domRemove()
         const contents = document.querySelector('.dashboard__contents')
+        this.checkEmpty();
+        this.domRemove()
         const allTasks = document.createElement('div')
         allTasks.classList.add('all-tasks__container')
-        contents.append(allTasks)
+        allTasks.innerHTML = `<h3>All Tasks</h3>`
 
-        const allTasksContainer = document.querySelector('.all-tasks__container')
+        contents.append(allTasks)
         const fieldContainer = document.createElement('div')
         fieldContainer.classList.add('singular-task')
-
  
         let fields = [
             {tag: 'input', type: 'text', className: 'allTasksInput1'},
@@ -31,10 +31,7 @@ export class AllTasks {
             {tag: 'input', type: 'submit', value: 'save', className: 'allTasksInput4'},
             {tag: 'button', className: 'makePriority'}
         ]
-
         let input
-
-
         for (let i = 0; i < getData.length; i++) {
             fields.forEach((element, index) => {
                 const { tag, type, value, className } = element;
@@ -44,33 +41,26 @@ export class AllTasks {
                 if (value) { input.value = value }
                 if (tag == 'button') { 
                     input.textContent = 'Make Priority'};
-
                 if (getPriorityData[i] && tag === 'button') {
-                        input.classList.add('made-priority')
-                    
-
-                    /*
-                    else if (getPriorityData.length < getData.length) {
-                        let remainder = getData.length % getPriorityData.length
-                    }*/
+                    input.classList.add('made-priority')
                 }
-
                 fieldContainer.append(input)
-
-
                 const { title, date, details } = getData[i];
                 let array = [title, date, details];
                 input.placeholder = array[index];
             });
-
-            allTasksContainer.append(fieldContainer)
+            allTasks.append(fieldContainer)
         };
-
-
-
        priorityTask.clickMakePriority();
-
     };
+
+
+    checkEmpty() {
+        const emptyWindow = document.querySelector('.emptyPriorities')
+        if (emptyWindow) {
+            emptyWindow.remove()
+        }
+    }
 
     
     domRemove() {
@@ -83,6 +73,8 @@ export class AllTasks {
             priorityTasksContainer.remove();
         }
     }
+
+
 
 
 

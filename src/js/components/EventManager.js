@@ -7,6 +7,8 @@ export let priorityTasksBtn = ['placeholder'];
 
 export let newTaskSubmit = []
 
-export let priorityMatch = []
+export let validPriorities = []
+
+export let lastPriority = [];
 
 

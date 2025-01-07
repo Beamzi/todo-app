@@ -22,5 +22,3 @@ task.clickNewTask();
 allTasks.clickAllTasks();
 
 
-
-
