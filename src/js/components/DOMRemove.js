@@ -27,5 +27,4 @@ export class DOMRemove {
             emptyAllTasks.remove();
         }
     }
-
 }

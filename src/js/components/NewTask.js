@@ -63,12 +63,7 @@ export class NewTask {
         return taskDataInstance
     }
 
-    idCount() {
-        if (this.dataSubmit) {
-            let num = 0
-            return num++
-        }
-    }
+    
 
     dataSubmit() {
         const submit = document.querySelector('.submit')
@@ -78,9 +73,12 @@ export class NewTask {
             event.preventDefault()
             const keys = ['title', 'date', 'details']
             const fields = document.querySelectorAll('.fields')
+            
+
             fields.forEach((field, index) => {
                 this.form[keys[index]] = field.value;
             });
+
             getData.push(this.nextInstance())
             this.domRemove()
 

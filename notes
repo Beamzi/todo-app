@@ -1,0 +1,22 @@
+(research needed) the date needs to be formatted correctly and probably turned into an integer
+
+still need to be able to remove tasks from all tasks
+
+need to be able to 'edit' tasks in both views
+
+need to be able to cancel initial task creation
+
+make priority buttons need to be only clickable once
+
+when priority button is clicked, have an arrow on the side or glowy thing around it that points to 'priority tasks app
+
+when clicking save, it should keep the previous value inside the fields, not just placeholders
+
+when clicking save, if fields are empty it should do nothing
+
+clicking new task from priority task tab resets the app
+
+
+
+**
+try making a drop down feature for each task, so when you click it, it expands all the fields from title

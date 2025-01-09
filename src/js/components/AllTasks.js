@@ -1,7 +1,7 @@
 
 
 
-import { getData, getPriorityData } from "./taskData";
+import { getData, getPriorityData, taskData } from "./taskData";
 
 import { PriorityTask } from "./PriorityTasks";
 const priorityTask = new PriorityTask
@@ -9,7 +9,12 @@ const priorityTask = new PriorityTask
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 
+import { madePriorityIndex } from "./EventManager";
+
 export class AllTasks {
+    constructor() {
+        this.form = {}
+    }
 
 
     clickAllTasks() {
@@ -20,9 +25,60 @@ export class AllTasks {
             this.noTasks();
             domRemove.containerRemove();
             this.tasksList();
-
         });
     };
+    
+    clickMakePriority() {
+        const makePriority = document.querySelectorAll('.makePriority')
+        makePriority.forEach((btn, index) => {
+            btn.setAttribute('id', `btn${index}`)
+            btn.addEventListener ('click', (event) => {
+              //  priorityTrigger.splice(0, 1, index)
+                event.preventDefault();
+                btn.style['background-color'] = 'red';
+                getPriorityData[index] = getData[index]
+                console.log(getPriorityData, 'getPriorityData')
+            });
+        });
+    };
+
+    clickSave() {
+        const save = document.querySelectorAll('.save-btn')
+        save.forEach((btn, index) => {
+            btn.addEventListener('click', (event) => {
+            //    btn.style['background-color'] = 'red';
+                btn.classList.toggle('save-toggle-btn')
+                setTimeout(() => {
+                    btn.classList.toggle('save-toggle-btn')
+                }, 300)
+                let obj = {}
+
+                event.preventDefault()
+                const fields = document.querySelectorAll(`.task${index} > *`)
+                fields.forEach((field, index) => {
+                    let keys = ['title', 'date', 'details']
+                    if (index <= 2) {
+                        obj[keys[index]] = field.value
+                        field.classList.add('save-toggle')
+                        field.addEventListener('click', () => {
+                            field.classList.remove('save-toggle')
+                        });
+                    };
+                });
+                getData[index] = obj
+                console.log(getData)
+                
+                const madePriority = document.querySelector(`.made-priority${index}`)
+                if (madePriority) {
+                    madePriority.click();
+                }
+
+            });
+        });
+    };
+
+
+
 
     tasksList() {
         const contents = document.querySelector('.dashboard__contents')
@@ -31,40 +87,48 @@ export class AllTasks {
         allTasks.innerHTML = `<h3>All Tasks</h3>`
         contents.prepend(allTasks)
 
-        const fieldContainer = document.createElement('div')
-        fieldContainer.classList.add('singular-task')
+      //  const fieldContainer = document.createElement('div')
+       // fieldContainer.classList.add('singular-task')
  
         let fields = [
-            {tag: 'input', type: 'text', className: 'allTasksInput1'},
-            {tag: 'input', type: 'date', className: 'allTasksInput2'},
-            {tag: 'textarea', className: 'allTasksInput3'},
-            {tag: 'input', type: 'submit', value: 'save', className: 'allTasksInput4'},
+            {tag: 'input', type: 'text', className: 'all-tasks-text'},
+            {tag: 'input', type: 'date', className: 'all-tasks-text'},
+            {tag: 'textarea', className: 'all-tasks-text'},
+            {tag: 'input', type: 'submit', value: 'save', className: 'save-btn'},
             {tag: 'button', className: 'makePriority'}
         ]
+
         let input
         for (let i = 0; i < getData.length; i++) {
+            const fieldContainer = document.createElement('div')
+            fieldContainer.classList.add('singular-task', `task${i}`)
+    
             fields.forEach((element, index) => {
                 const { tag, type, value, className } = element;
                 input = document.createElement(tag)
-                input.classList.add('allTasksInputs', className)
+                input.classList.add('all-tasks-fields', className)
                 if (type) { input.type = type }
-                if (value) { input.value = value }
                 if (tag == 'button') { 
                     input.textContent = 'Make Priority'};
                 if (getPriorityData[i] && tag === 'button') {
-                    input.classList.add('made-priority')
+                    input.classList.add('made-priority', `made-priority${i}`)
                 }
+               // if (getData[i] && type === 'submit') input.classList.add('saved')
+
                 fieldContainer.append(input)
                 const { title, date, details } = getData[i];
-                let array = [title, date, details];
+                let array = [title, date, details, 'save'];
                 input.placeholder = array[index];
+                input.value = array[index]
             });
 
             domRemove.checkEmpty();
             allTasks.append(fieldContainer)
         };
 
-       priorityTask.clickMakePriority();
+       this.clickMakePriority();
+       this.clickSave();
+
     };
 
 
@@ -85,14 +149,6 @@ export class AllTasks {
         <p>get started by clicking New Task</p>`;
         dashboard.append(allTasksEmpty)
     }
-
-
-    
-
-
-
-
-
     
 
 };

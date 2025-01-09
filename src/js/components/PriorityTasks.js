@@ -7,9 +7,6 @@ const domRemove = new DOMRemove
 
 export class PriorityTask {
     constructor() {}
-
-
-
     clickPriorityTasks() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
         priorityTasksBtn.addEventListener('click', () => {
@@ -19,20 +16,6 @@ export class PriorityTask {
             domRemove.containerRemove()
             this.domCreatePriorityTasks();
             this.removePriority();
-
-       });
-    };
-
-    clickMakePriority() {
-        const makePriority = document.querySelectorAll('.makePriority')
-        makePriority.forEach((btn, index) => {
-            btn.setAttribute('id', `btn${index}`)
-            btn.addEventListener ('click', (event) => {
-                event.preventDefault();
-                btn.style['background-color'] = 'red';
-                getPriorityData[index] = getData[index]
-                console.log(getPriorityData, 'getPriorityData')
-            });
         });
     };
 
@@ -54,7 +37,7 @@ export class PriorityTask {
                     };
 
                     getPriorityData.splice(validIndices[index], 1, undefined)
-                    console.log(getPriorityData)
+                    //console.log(getPriorityData)
                     console.log(validIndices)
                     this.renderPriority();
 
@@ -122,6 +105,7 @@ export class PriorityTask {
                     input.placeholder = array[index];
                 };
             });
+            
 
             priorityTasks.append(singularPriorityTask)
 

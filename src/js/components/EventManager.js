@@ -12,3 +12,12 @@ export let validPriorities = []
 export let lastPriority = [];
 
 
+
+
+export let editTask = [];
+
+
+export let madePriorityIndex = [];
+
+
+export let saved = ['savasding']
