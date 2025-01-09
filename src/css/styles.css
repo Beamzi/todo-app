@@ -24,6 +24,8 @@ button, .save-btn, .submit {
 .save-toggle-btn {
     animation: saving 0.3s linear forwards;
     background-color: rgb(206, 206, 206);
+    background-color: rgb(134, 255, 109);
+
 
 }
 
@@ -32,7 +34,9 @@ button, .save-btn, .submit {
         background-color: rgb(134, 255, 109);
     }
     100% {
-        background-color: rgb(206, 206, 206);
+        background-color: rgb(134, 255, 109);
+
+      /*  background-color: rgb(206, 206, 206); */
         /*background-color: rgb(219, 219, 219) */
 
     }

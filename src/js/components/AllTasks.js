@@ -47,10 +47,11 @@ export class AllTasks {
         save.forEach((btn, index) => {
             btn.addEventListener('click', (event) => {
             //    btn.style['background-color'] = 'red';
-                btn.classList.toggle('save-toggle-btn')
-                setTimeout(() => {
-                    btn.classList.toggle('save-toggle-btn')
-                }, 300)
+                btn.classList.add('save-toggle-btn', 'save-animation')
+
+              //  setTimeout(() => {
+              //     btn.classList.toggle('save-toggle-btn')
+              //  }, 300)
                 let obj = {}
 
                 event.preventDefault()
@@ -62,6 +63,9 @@ export class AllTasks {
                         field.classList.add('save-toggle')
                         field.addEventListener('click', () => {
                             field.classList.remove('save-toggle')
+                            btn.classList.remove('save-toggle-btn')
+
+
                         });
                     };
                 });
