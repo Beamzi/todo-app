@@ -20,3 +20,19 @@ clicking new task from priority task tab resets the app
 
 **
 try making a drop down feature for each task, so when you click it, it expands all the fields from title
+
+
+
+justification for webpack - media uploads to task
+
+
+
+add an 'edit your tasks here' kind of animation when all tasks is first opened
+
+abstract out the querySelectors into their own utiltiy function and call those selectors when needed
+
+
+
+
+
+webpack is more suited to my goals for this app as i've considered scalability and granular control of image compression etc, as well as the performance implications

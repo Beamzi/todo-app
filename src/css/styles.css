@@ -3,8 +3,13 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+input, textarea {
+    resize: none;
+}
 
 
 button, .non-editable, h3, h2, h1, .makePriority, .save-btn, .singular-task, .singular-priority-task, .dashboard__utilities, p, .modal__form {
@@ -16,45 +21,35 @@ button, .save-btn, .submit {
     cursor:pointer
 }
 
+
 .all-tasks-text {
-    color: rgb(92, 92, 92)
+    color: rgb(92, 92, 92);
+}
+
+.all-tasks-text-init {
+    background-color: rgba(206, 206, 206, 0.63);
+}
+
+.save-toggle-text, .save-toggle-text-init {
+    color: rgb(155, 155, 155);
+    background-color: rgba(206, 206, 206, 0.63) !important; 
 }
 
 
-.save-toggle-btn {
-    animation: saving 0.3s linear forwards;
-    background-color: rgb(206, 206, 206);
+.save-btn-init {
+    background-color: rgb(134, 255, 109);
+}
+
+
+.save-btn-click {
     background-color: rgb(134, 255, 109);
 
-
-}
-
-@keyframes saving {
-    0% {
-        background-color: rgb(134, 255, 109);
-    }
-    100% {
-        background-color: rgb(134, 255, 109);
-
-      /*  background-color: rgb(206, 206, 206); */
-        /*background-color: rgb(219, 219, 219) */
-
-    }
-}
-
-.save-toggle {
-    color: rgb(155, 155, 155);
-    
-    background-color: rgba(206, 206, 206, 0.63) !important;
 }
 
 
 
 
-.all-tasks-text {
-    background-color: rgb(241, 241, 241);
 
-}
 
 
 
@@ -235,6 +230,7 @@ p, span {
     box-shadow: 10px 10px 500px 200px;
 
     >* {
+        box-sizing: border-box;
         margin: 2px;
         border-radius: 7px;
         border-style: none;
@@ -248,26 +244,48 @@ p, span {
         padding-bottom: 20px;
     }
 
+
 }
 
 
 .singular-task {
+    width: 100%;
     width: 100% !important;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    :nth-child(-n + 3) {
+        flex-basis: 100%; 
+    }
+    :nth-child(n + 4) {
+        flex-basis: calc(50% - 10px)
+    }
     padding: 20px;
     padding-bottom: 20px;
-
     > * {
+        padding: 10px;
+        width: 100%;
         margin: 3px;
         border-radius: 7px;
         border-style: none;
-        padding: 8px;
+    };
+
+    .field3, .field4 {
+        max-height: 50px;
+        min-height: 50px;
     }
+
+
+    textarea {
+        height: 200px;
+    }
+
+
+
     button {
         margin-bottom: 30px;
     }
 }
+
 
 
 .singular-priority-task {
@@ -291,7 +309,8 @@ p, span {
 
 
 /* this is really important */
-.made-priority {
-    background-color: red;
+.made-priority, .made-priority-init {
+    box-shadow: red 0px -0px 10px 2px;
+
 }
 

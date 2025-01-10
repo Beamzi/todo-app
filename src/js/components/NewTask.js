@@ -67,8 +67,6 @@ export class NewTask {
 
     dataSubmit() {
         const submit = document.querySelector('.submit')
-        const modal = document.querySelector('.modal')
-
         submit.addEventListener('click', (event) => {
             event.preventDefault()
             const keys = ['title', 'date', 'details']

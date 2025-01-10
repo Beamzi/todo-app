@@ -5,6 +5,7 @@ import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 
 
+
 export class PriorityTask {
     constructor() {}
     clickPriorityTasks() {
@@ -26,7 +27,7 @@ export class PriorityTask {
             domRemove.checkEmpty();
             if (removeBtn) {
                 btn.addEventListener('click', (e) => {
-                   let  validIndices = []
+                    let  validIndices = []
                     for (let i = 0; i < getPriorityData.length; i++) {
                         if (getPriorityData[i] !== undefined) {
                             validIndices.push(i)
