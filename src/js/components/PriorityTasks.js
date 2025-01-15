@@ -21,9 +21,9 @@ export class PriorityTask {
     };
 
     removePriority() {
+        // since undefined === empty array item; we leverage the default behaviour of sparse arrays
         const removeBtn = document.querySelectorAll('.remove-priority')
         removeBtn.forEach((btn, index) => {
-            //checkEmpty called specifically for remove event
             domRemove.checkEmpty();
             if (removeBtn) {
                 btn.addEventListener('click', (e) => {
@@ -32,22 +32,18 @@ export class PriorityTask {
                         if (getPriorityData[i] !== undefined) {
                             validIndices.push(i)
                             console.log(validIndices)
-                          //  validIndices[i] = validPriorities[i]
-                           //console.log(validPriorities)
                         };
                     };
-
                     getPriorityData.splice(validIndices[index], 1, undefined)
-                    //console.log(getPriorityData)
+                    // by using `undefined` here to replace tasks, this maintains the implied length of the array
                     console.log(validIndices)
                     this.renderPriority();
-
                     if (validIndices.length === 1) {
                         const remainingTask = document.querySelector('.singular-priority-task')
                         if (remainingTask) {
                             remainingTask.remove()
-                        }
-                    }
+                        };
+                    };
                 });
             };
         });
@@ -72,12 +68,13 @@ export class PriorityTask {
         const contents = document.querySelector('.dashboard__contents')
         const priorityTasks = document.createElement('div')
         priorityTasks.classList.add('priority-tasks__container')
-        priorityTasks.innerHTML = `<h3>Priority Tasks</h3>`
+        priorityTasks.innerHTML = `
+        <h3 class="view-title">Priority Tasks</h3>
+        <hr>
+        `
         contents.prepend(priorityTasks)
-        
         const singularPriorityTask = document.createElement('div')
         singularPriorityTask.classList.add('singular-priority-task')
-
 
         let fields = [
             {tag: 'input', type: 'text', className: 'priority-field-input-1'},
@@ -106,10 +103,7 @@ export class PriorityTask {
                     input.placeholder = array[index];
                 };
             });
-            
-
             priorityTasks.append(singularPriorityTask)
-
         };
         console.log(getPriorityData, 'getPriorityData')
     };
@@ -120,5 +114,4 @@ export class PriorityTask {
         const allTasksBtn = document.querySelector('.all-tasks-btn')
         allTasksBtn.classList.remove('all-tasks-active')
     }
-
 };

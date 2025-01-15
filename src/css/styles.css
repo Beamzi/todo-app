@@ -12,7 +12,7 @@ input, textarea {
 }
 
 
-button, .non-editable, h3, h2, h1, .makePriority, .save-btn, .singular-task, .singular-priority-task, .dashboard__utilities, p, .modal__form {
+button, .non-editable, h3, h2, h1, .makePriority, .save-btn, .singular-task, .singular-priority-task, .dashboard__utilities, p, .modal__form, hr {
     user-select: none; 
     caret-color: transparent; 
 }
@@ -21,40 +21,32 @@ button, .save-btn, .submit {
     cursor:pointer
 }
 
-
 .all-tasks-text {
     color: rgb(92, 92, 92);
+    box-shadow: rgb(214, 214, 214) 0px 0px 1px 1px;
+
 }
 
 .all-tasks-text-init {
     background-color: rgba(206, 206, 206, 0.63);
+    box-shadow: black 0px 0px 0px 0px;
+
 }
 
 .save-toggle-text, .save-toggle-text-init {
     color: rgb(155, 155, 155);
     background-color: rgba(206, 206, 206, 0.63) !important; 
-}
+    box-shadow: black 0px 0px 0px 0px;
 
+}
 
 .save-btn-init {
     background-color: rgb(134, 255, 109);
 }
 
-
 .save-btn-click {
     background-color: rgb(134, 255, 109);
-
 }
-
-
-
-
-
-
-
-
-
-
 
 html, body {
     margin: 0;
@@ -85,20 +77,15 @@ p, span {
     font-family: monospace;
 }
 
-
-
-
 .dashboard__sidebar, .dashboard__utilities {
     position: relative;
     z-index: 3;
 }
 
-
 .header {
     position: relative;
     z-index: 2;
 }
-
 
 .dashboard {
     z-index: 1;
@@ -114,8 +101,6 @@ p, span {
     }
 }
 
-
-
 .dashboard__sidebar {
     display:flex;
     flex-direction: column;
@@ -128,9 +113,6 @@ p, span {
         margin: 5px 10px 5px 10px;
     }
 }
-
-
-
 
 .priority-tasks-active, .all-tasks-active {
     background-color: black;
@@ -154,9 +136,6 @@ p, span {
     align-items: center;
 }
 
-
-
-
 .emptyPriorities, .empty-all-tasks {
     text-align: center;
     padding-left: 20px;
@@ -172,32 +151,31 @@ p, span {
     align-items: center;
 }
 
-
-
 .dashboard__contents {
     box-shadow: 10px 10px 500px 200px;
-    
+    .view-title {
+        margin: 20px;
+    }
+    hr {
+        border: none;
+        width: 70%;
+        height: 0.1px;
+        background-color: rgb(153, 153, 153);;
+        opacity: 0.2;
+    }
 }
-
-
 
 
 .header {
     min-height: 50px;
     background-color: rgb(241, 241, 241);
-
 }
-
-
 
 
 .dashboard__utilities {
     background-color: rgb(83, 83, 83);
     min-width: 50px;
-
 }
-
-
 
 
 .dashboard__tasks__new-task {
@@ -209,8 +187,6 @@ p, span {
         margin: 5px;
     }
 }
-
-
 
 
 .modal__form {
@@ -228,7 +204,6 @@ p, span {
     background-color: rgb(177, 177, 177);
     padding: 20px;
     box-shadow: 10px 10px 500px 200px;
-
     >* {
         box-sizing: border-box;
         margin: 2px;
@@ -243,35 +218,61 @@ p, span {
         text-shadow: black 1px 1px 3px; */
         padding-bottom: 20px;
     }
-
-
 }
 
 
 .singular-task {
+    box-shadow: 0px 0px 1px 1px;
     width: 100%;
     width: 100% !important;
     display: flex;
     flex-wrap: wrap;
-    :nth-child(-n + 3) {
+    :nth-child(-n + 4) {
         flex-basis: 100%; 
     }
-    :nth-child(n + 4) {
+    :nth-child(n + 5) {
         flex-basis: calc(50% - 10px)
     }
     padding: 20px;
     padding-bottom: 20px;
-    > * {
+
+    .all-tasks-text, .field3, .field4 {
         padding: 10px;
         width: 100%;
-        margin: 3px;
+        margin: 4px;
         border-radius: 7px;
         border-style: none;
     };
 
+    .task-top-bar {
+        border-radius: 7px;
+        margin: 4px;
+        position: relative;
+
+
+        box-shadow: 0px 0px 1px 1px;
+        max-height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        text-align: center;
+
+
+    }
+    .all-tasks-remove-btn {
+        padding: 10px;
+        max-width: 100px;
+        height: 100%;
+
+
+
+    }
+
     .field3, .field4 {
         max-height: 50px;
         min-height: 50px;
+        margin-bottom: 30px;
+
     }
 
 
@@ -280,10 +281,7 @@ p, span {
     }
 
 
-
-    button {
-        margin-bottom: 30px;
-    }
+ 
 }
 
 
@@ -310,7 +308,6 @@ p, span {
 
 /* this is really important */
 .made-priority, .made-priority-init {
-    box-shadow: red 0px -0px 10px 2px;
-
+    box-shadow: red 0px -0px 3px 1px;
 }
 

@@ -20,4 +20,4 @@ export let editTask = [];
 export let madePriorityIndex = [];
 
 
-export let saved = ['savasding']
+export let saveOrSaved = [];

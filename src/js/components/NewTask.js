@@ -63,7 +63,6 @@ export class NewTask {
         return taskDataInstance
     }
 
-    
 
     dataSubmit() {
         const submit = document.querySelector('.submit')
@@ -71,15 +70,11 @@ export class NewTask {
             event.preventDefault()
             const keys = ['title', 'date', 'details']
             const fields = document.querySelectorAll('.fields')
-            
-
             fields.forEach((field, index) => {
                 this.form[keys[index]] = field.value;
             });
-
             getData.push(this.nextInstance())
             this.domRemove()
-
           //  makePriorityBtn.splice(0, 1, true)
             const allTasksBtn = document.querySelector('.all-tasks-btn')
             allTasksBtn.click();
@@ -91,16 +86,12 @@ export class NewTask {
     };
 
 
-
-
-
-
     domRemove() {
         const modalForm = document.querySelector('.modal__form')
         modalForm.remove()
     }
 
 
-        
-
 };
+
+export const fields = () => document.querySelector('.fields')

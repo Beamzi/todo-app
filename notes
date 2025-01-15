@@ -36,3 +36,15 @@ abstract out the querySelectors into their own utiltiy function and call those s
 
 
 webpack is more suited to my goals for this app as i've considered scalability and granular control of image compression etc, as well as the performance implications
+
+change save value to saved 
+
+need field validation
+
+interactive icons to represent buttons
+
+add 'projects' or lists for tasks to be assigned to
+
+should be able to choose a project when creating a task OR after creating it some ui element,
+
+maybe add a checklist thing to tasks(?)
