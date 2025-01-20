@@ -1,8 +1,7 @@
 
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
-
 import { saveOrSaved } from "./EventManager"
 
 const domRemove = new DOMRemove
@@ -70,6 +69,7 @@ export class AllTasks {
                 if (madePriority) {
                     madePriority.click();
                 };
+                
             });
         });
     };
@@ -107,7 +107,9 @@ export class AllTasks {
         ]
 
         let topBar = [
-            { tag: 'button', className: 'all-tasks-remove-btn', value: 'remove' }
+
+            { tag: 'button', className: 'all-tasks-projects', textContent: 'projects', type: 'button',  value: 'Projects', },
+            { tag: 'button', className: 'all-tasks-remove-btn', textContent: 'remove', type: 'button', value: 'remove' },
         ]
 
         let input
@@ -119,10 +121,9 @@ export class AllTasks {
                 let fieldClass
                 const { tag, type, value, className } = obj;
                 input = document.createElement(tag)
+
                 if (index > 0 ) fieldClass = `field${index - 1}`
-
                 else fieldClass = `top-bar${i}`;
-
                 input.classList.add('all-tasks-fields', className, fieldClass)
                 if (type) input.type = type
                 if (tag == 'button') input.textContent = 'Make Priority';
@@ -134,16 +135,26 @@ export class AllTasks {
                     input.classList.add(`save-btn${i}`, 'save-btn-init' )
                 }
 
-
+                /////separate function /////
                 if (index < 1) {
                     topBar.forEach((obj, index) => {
-                        const { tag, className, value } = obj;
+                        const { tag, className, value, textContent, type } = obj;
+
                         topBarBtn = document.createElement(tag)
                         if (value) topBarBtn.value = value
-                        if (value === 'remove') topBarBtn.classList.add(className, `removeBtn${i}`)
-                        topBarBtn.textContent = 'remove'
+                        if (value === 'remove') {
+                            topBarBtn.classList.add(className, `removeBtn${i}`) 
+                        }
+                        topBarBtn.textContent = textContent
+                        topBarBtn.type = type;
+
+                        
+                      //  topBarBtn.textContent = 'remove'
+
+                        input.append(topBarBtn)
+
                     });
-                    input.append(topBarBtn)
+
                 }
 
                 fieldContainer.append(input)

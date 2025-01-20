@@ -305,6 +305,29 @@ p, span {
 }
 
 
+.projects-list, .dashboard__sidebar__projects {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    background-color: rgba(240, 248, 255, 0);
+    margin-bottom: 10px;
+    
+    width: 100%;
+    button {
+        text-align: start;
+        padding: 4px;
+        width: 100%;
+        margin: 2px 0px 2px 0px;
+    }
+    
+}
+
+.project-name {
+    width: 120px
+}
+
 
 /* this is really important */
 .made-priority, .made-priority-init {
