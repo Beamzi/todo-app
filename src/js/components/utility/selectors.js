@@ -14,5 +14,6 @@ export const staticSelectors = {
     allTasksBtn: document.querySelector('.all-tasks-btn'),
     priorityTasksBtn: document.querySelector('.priorities-btn'),
     sidebarProjects: document.querySelector('.dashboard__sidebar__projects'),
+
 }
 

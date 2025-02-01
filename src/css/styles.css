@@ -93,7 +93,6 @@ p, span {
     justify-content: center;
     padding-top: 30px;
     padding-bottom: 30px;
-
     >* {
         border: 3px rgba(255, 255, 255, 0) solid;
         margin: 5px;
@@ -104,9 +103,12 @@ p, span {
 .dashboard__sidebar {
     display:flex;
     flex-direction: column;
+    align-items: center;
+    width: 150px;
     background-color: rgb(83, 83, 83);
     padding: 20px 0px 20px 0px;
     .dashboard-buttons {
+        width: 80%;
         border: 0px black solid;
         border-radius: 10px;
         padding: 10px;
@@ -301,7 +303,6 @@ p, span {
     .remove-priority {
         margin-bottom: 30px;
     }
-
 }
 
 
@@ -314,7 +315,7 @@ p, span {
     background-color: rgba(240, 248, 255, 0);
     margin-bottom: 10px;
     
-    width: 100%;
+    max-width: 100px;
     button {
         text-align: start;
         padding: 4px;
@@ -324,8 +325,18 @@ p, span {
     
 }
 
+.dashboard__sidebar__projects {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    background-color: rgba(240, 248, 255, 0);
+    margin-bottom: 10px;
+    width: 100%;
+}
+
 .project-name {
-    width: 120px
+    width: 100%;;
 }
 
 

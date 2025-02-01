@@ -1,7 +1,6 @@
 
 //factory syntax
 import { taskData, getData, getPriorityData } from "./taskData";
-
 import { makePriorityBtn, allTasksBtn, newTaskSubmit } from "./EventManager";
 
 
@@ -62,6 +61,7 @@ export class NewTask {
         let taskDataInstance = taskData(this.form.title, this.form.date, this.form.details)
         return taskDataInstance
     }
+    
 
 
     dataSubmit() {

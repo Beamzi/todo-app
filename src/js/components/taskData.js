@@ -16,7 +16,9 @@ export let getData = [];
 // recevies copies of the object instances that are 'priortised'
 export let getPriorityData = [];
 
-//recieves copies of the object instances that are assigned to a project
-export let getProjectsData = [];
 
-export let getProjects = []
+export let getProjects = [] 
+
+export function projectArrays (projectTitle) {
+    return [ projectTitle ];
+}

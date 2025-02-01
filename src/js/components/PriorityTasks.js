@@ -21,7 +21,6 @@ export class PriorityTask {
     };
 
     removePriority() {
-        // since undefined === empty array item; we leverage the default behaviour of sparse arrays
         const removeBtn = document.querySelectorAll('.remove-priority')
         removeBtn.forEach((btn, index) => {
             domRemove.checkEmpty();

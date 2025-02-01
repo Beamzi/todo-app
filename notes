@@ -48,3 +48,6 @@ add 'projects' or lists for tasks to be assigned to
 should be able to choose a project when creating a task OR after creating it some ui element,
 
 maybe add a checklist thing to tasks(?)
+
+
+create new project, prrevent empty field submission
