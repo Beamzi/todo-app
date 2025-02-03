@@ -16,6 +16,10 @@ export class DOMRemove {
         if (welcomeContainer) {
             welcomeContainer.remove();
         }
+        const projectContainer = document.querySelector('.project__container')
+        if (projectContainer) {
+            projectContainer.remove();
+        }
     }
     checkEmpty() {
         const emptyWindow = document.querySelector('.emptyPriorities')

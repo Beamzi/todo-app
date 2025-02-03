@@ -3,30 +3,18 @@ import { dynamicSelectors, staticSelectors } from "./utility/selectors";
 import { getData, getPriorityData, getProjects, getProjectsData } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
+import { TaskCard } from "./TaskCard";
+const taskCard = new TaskCard
+
 
 export class AllTasks {
     constructor() {
         this.references = [];
-        this.fields = [
-            { tag: 'div', className: 'task-top-bar' },
-            { tag: 'input', type: 'text', className: 'all-tasks-text' },
-            { tag: 'input', type: 'date', className: 'all-tasks-text' },
-            { tag: 'textarea', className: 'all-tasks-text' },
-            { tag: 'input', type: 'submit', value: 'save', className: 'save-btn' },
-            { tag: 'button', className: 'makePriority' },
-        ];
-        this.topBar = [
-            { tag: 'ul', className: 'all-tasks-projects', textContent: 'projects', type: 'button',  value: 'projects' },
-            { tag: 'button', className: 'all-tasks-remove-btn', textContent: 'remove', type: 'button', value: 'remove' },
-        ]
-
-
         this.dashboardContents = staticSelectors.dashboardContents;
         // Ensure the listener is only attached once
         if (!this.dashboardContents.__listenerAttached) {
             this.dashboardContents.addEventListener('click', (event) => {
                 this.clickProjects(event)
-
             });
             this.dashboardContents.__listenerAttached = true; // Mark as attached
         };
@@ -37,7 +25,9 @@ export class AllTasks {
         getData.forEach((fas, index) => {
             if (event.target.classList.contains(`project-list${index}`)) {
                 this.renderProjectList(event.target, index);
+                this.expandProjects(event.target)
                 this.clickProjectInList(index)
+                
               //event.stopPropagation()
             };
         });
@@ -61,14 +51,19 @@ export class AllTasks {
         };
     }
 
+    expandProjects(projects) {
+        projects.classList.toggle('expand-list')
+    }
+
+
     renderProjectList(projectList, index) {
         //index from getData in clickProjects
-        let subLi
-        let subBtn
-        for (let i = 0; i < getProjects.length; i++) {
-            subLi = document.createElement('li')
-            subBtn = document.createElement('button')
-
+        this.resetProjectList();
+        getProjects.forEach((item, i) => {
+            let subLi = document.createElement('li')
+            subLi.classList.add('expand-list-items', `items-of-list-${index}`)
+            let subBtn = document.createElement('button')
+            this.references.push(subLi)
             const  [ string ] = getProjects[i]
             console.log(string)
             subBtn.textContent = string
@@ -76,12 +71,15 @@ export class AllTasks {
             subBtn.classList.add(`project-${i}-of-list-${index}`, 'all-projects-menu')
             projectList.append(subLi)
             subLi.append(subBtn)
-        }
+        })
     }
 
-
-
-
+    resetProjectList() {
+        this.references.forEach((item, i) => {
+            this.references[i].remove();
+        });
+        this.references = [];
+    }
 
     removeTask() {
         const allTasksBtn = staticSelectors.allTasksBtn
@@ -106,8 +104,6 @@ export class AllTasks {
             domRemove.containerRemove();
             this.tasksList();
             this.clickProjectInList()
-
-
         });
     }
     
@@ -169,7 +165,7 @@ export class AllTasks {
 
     tasksList() {
        const allTasks = this.domInit();
-       this.renderFields(this.fields, this.topBar, allTasks)
+       this.renderFields(taskCard.fields(), taskCard.topBar(), allTasks)
        this.clickMakePriority();
        this.clickSave();
        this.removeTask();
@@ -196,7 +192,7 @@ export class AllTasks {
                 if (tag === 'button') input.textContent = 'Make Priority';
                 if (type) input.type = type
                 this.classListGen(i, input, index, obj)
-                if (index < 1) this.renderTopbar(topBar, input, i)
+                if (index < 1) taskCard.renderTopbar(topBar, input, i)
                 this.displayValues(input, index, i)
                 fieldContainer.append(input)
             });
@@ -218,25 +214,6 @@ export class AllTasks {
         if (getPriorityData[i] && tag === 'button') {
             input.classList.add('made-priority', `made-priority${i}`)
         };
-    }
-
-
-    renderTopbar(topBar, input, i) {
-        topBar.forEach((obj, index) => {
-            const { tag, className, value, textContent, type } = obj;
-            let topBarBtn = document.createElement(tag)
-            if (value) topBarBtn.value = value
-            if (value === 'remove') {
-                topBarBtn.classList.add(className, `removeBtn${i}`) 
-            }
-            if (value === 'projects') topBarBtn.classList.add(className, `project-list${i}`)
-            topBarBtn.textContent = textContent;
-            topBarBtn.type = type;
-          //  topBarBtn.textContent = 'remove'
-            this.references.push(input)
-            input.append(topBarBtn)
-
-        });
     }
 
     displayValues(input, index, i) {

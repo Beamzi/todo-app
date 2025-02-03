@@ -17,7 +17,7 @@ button, .non-editable, h3, h2, h1, .makePriority, .save-btn, .singular-task, .si
     caret-color: transparent; 
 }
 
-button, .save-btn, .submit {
+button, .save-btn, .submit, ul {
     cursor:pointer
 }
 
@@ -246,30 +246,6 @@ p, span {
         border-style: none;
     };
 
-    .task-top-bar {
-        border-radius: 7px;
-        margin: 4px;
-        position: relative;
-
-
-        box-shadow: 0px 0px 1px 1px;
-        max-height: 50px;
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-        text-align: center;
-
-
-    }
-    .all-tasks-remove-btn {
-        padding: 10px;
-        max-width: 100px;
-        height: 100%;
-
-
-
-    }
-
     .field3, .field4 {
         max-height: 50px;
         min-height: 50px;
@@ -307,7 +283,6 @@ p, span {
 
 
 .projects-list, .dashboard__sidebar__projects {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -321,11 +296,12 @@ p, span {
         padding: 4px;
         width: 100%;
         margin: 2px 0px 2px 0px;
-    }
-    
+    };
 }
 
 .dashboard__sidebar__projects {
+    position: relative;
+    top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -336,12 +312,122 @@ p, span {
 }
 
 .project-name {
-    width: 100%;;
+    width: 100%;
+}
+
+.dashboard-project-btns {
+    min-width: 100px;
+    border-radius: 7px;
+    border: none;
 }
 
 
 /* this is really important */
 .made-priority, .made-priority-init {
     box-shadow: red 0px -0px 3px 1px;
+
 }
+
+
+
+
+
+.task-top-bar {
+    height: 30px;
+    border-radius: 7px;
+    margin: 4px;
+    padding-left: 5px;
+    box-shadow: 0px 0px 1px 1px;
+    display: flex;
+
+}
+.all-tasks-remove-btn {
+    max-width: 100px;
+    height: 30px
+}
+
+
+
+.all-tasks-projects {
+    text-align: start;
+
+    display: flex;
+    flex-direction: column;
+
+    max-height: 500px;
+    z-index: 1000;
+}
+
+.all-tasks-projects > * {
+    transform: scaleY(0.0)
+}
+
+
+/*must come before expand list*/
+.all-tasks-projects {
+    max-height: 30px;
+    position: relative;
+    top: 3px;
+    z-index: 10000 !important;
+}
+
+.expand-list {
+    animation: ease forwards 0.3s expand-list ;
+     z-index: 10000 !important;
+}
+
+.expand-list-items {
+    padding: 2px;
+}
+
+@keyframes expand-list {
+    0% {
+    max-height: 30%;
+    background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        max-height: 100%;
+
+    background-color: black;
+    color: white;
+
+    }
+    
+}
+
+
+.expand-list > * {
+    animation: ease forwards 0.3s expand-items ;
+    
+}
+
+@keyframes expand-items {
+    0% {
+        transform: scaleY(0);
+        background-color: rgba(0, 0, 0, 0);
+
+
+    }
+    100% {
+    transform: scaleY(1);
+    background-color: black;
+
+
+
+    }
+}
+
+
+/*drop down buttons*/
+.all-projects-menu {
+    text-align: start;
+    width: 100%;
+    padding: 5px;
+    margin-top: 2px;
+
+
+}
+
+
+
 
