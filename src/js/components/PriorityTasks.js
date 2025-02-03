@@ -46,8 +46,7 @@ export class PriorityTask {
                 });
             };
         });
-    };
-
+    }
 
     renderPriority() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
@@ -85,7 +84,7 @@ export class PriorityTask {
 
         for (let i = 0; i < getPriorityData.length; i++) {
             fields.forEach((field, index) => {
-              //let input 
+              //let input
                 if (getPriorityData[i]) {
                     const { tag, type, className, value } = field
                     let  input = document.createElement(tag)

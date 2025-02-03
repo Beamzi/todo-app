@@ -1,5 +1,5 @@
 import { allTasksBtn } from "./EventManager";
-import { getProjectsData, getProjects, projectArrays } from "./taskData"
+import { getProjectsData, getProjects, projectArrays, getPriorityData } from "./taskData"
 import { staticSelectors } from "./utility/selectors"
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
@@ -10,7 +10,6 @@ const taskCard = new TaskCard
 export class Projects {
     constructor() {
         this.fieldReferences = [];
-
         const sidebarProjects = document.querySelector('.dashboard__sidebar__projects')
         sidebarProjects.addEventListener('click', (event) => {
             this.clickViewProject(event)
@@ -20,8 +19,9 @@ export class Projects {
     clickViewProject(event) {
         getProjects.forEach((item, arrIndex) => {
             if (event.target.classList.contains(`dashboard-project-btn${arrIndex}`)) {
+                domRemove.checkEmpty();
                 domRemove.containerRemove()
-                const allTasks = this.domInit(`project__container`);
+                const allTasks = taskCard.domInit(`project__container`, 'Projects');
                 this.renderViewProject(allTasks, arrIndex, taskCard.fields(), taskCard.topBar())
               //   taskCard.tasksList(arrIndex);
             }
@@ -33,32 +33,20 @@ export class Projects {
         for (let j = 0; j < getProjects[arrIndex].length; j++) {
             if (j > 0) {
                 const fieldContainer = document.createElement('div')
-                fieldContainer.classList.add('singular-project-task')
+                fieldContainer.classList.add('singular-project-task', `task${j - 1}`)
                 let input
-               /* let fields = [
-                    { tag: 'input', type: 'text', className: 'all-tasks-text' },
-                    { tag: 'input', type: 'date', className: 'all-tasks-text' },
-                    { tag: 'textarea', className: 'all-tasks-text' },
-                    { tag: 'input', type: 'submit', value: 'save', className: 'save-btn' },
-                    { tag: 'button', className: 'makePriority' },
-                ]; */
                 fields.forEach((object, index) => {
                     const { tag, type, className, value } = object
-
                     input = document.createElement(tag);
                     if (type) input.type = type
                     if (value) input.value = value
-                    input.classList.add(className)
+                  //  input.classList.add(className)
+                    taskCard.classListGen(j, input, index, object)
+
 
                     if (index < 1) taskCard.renderTopbar(topBar, input, j)
-
-                    const { title, date, details } = getProjects[arrIndex][j];
-                    let array = [ 'topBar', title, date, details, 'save' ];
-                    input.placeholder = array[index];
-                    input.value = array[index]
-
+                    taskCard.displayValues(input, index, getProjects[arrIndex][j])
                     fieldContainer.append(input)
-                
                 });
                 allTasks.append(fieldContainer)
             };
@@ -66,43 +54,6 @@ export class Projects {
     }
 
 
-    /*
-    renderTopbar(topBar, input, i) {
-        topBar.forEach((obj, index) => {
-            const { tag, className, value, textContent, type } = obj;
-            let topBarBtn = document.createElement(tag)
-            if (value) topBarBtn.value = value
-            if (value === 'remove') {
-                topBarBtn.classList.add(className, `removeBtn${i}`) 
-            }
-            if (value === 'projects') topBarBtn.classList.add(className, `project-list${i}`)
-            topBarBtn.textContent = textContent;
-            topBarBtn.type = type;
-          //  topBarBtn.textContent = 'remove'
-          //  this.references.push(input)
-            input.append(topBarBtn)
-
-        });
-    }
-        */
-
-    domInit(reference) {
-        const contents = staticSelectors.dashboardContents;
-        const container = document.createElement('div')
-        container.classList.add(reference)
-        container.innerHTML = `
-        <h3 class="view-title">projects</h3>
-        <hr>`
-        contents.prepend(container)
-        return container
-    }
-
-    
-
-
-
-
-    
 
     clickNewProject() {
         const newProjectBtn = document.querySelector('.create-new-project')
@@ -122,7 +73,6 @@ export class Projects {
     newProjectfields() {
         let field
         const container = staticSelectors.sidebarProjects
-
         const fields = [
             { tag: 'input', type: 'text', className: 'project-name' },
             { tag: 'input', type: 'submit', className: 'project-name-submit'},
@@ -138,8 +88,6 @@ export class Projects {
         console.log(this.fieldReferences)
         this.projectSubmit();
     }
-
-
 
 
 

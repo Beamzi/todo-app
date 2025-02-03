@@ -1,5 +1,5 @@
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, projectArrays } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 
@@ -24,6 +24,22 @@ export class TaskCard {
         ]
     }
 
+    classListGen(i, input, index, obj) {
+        const { tag, type, value, className } = obj;
+        let fieldClass
+        if (index > 0 ) fieldClass = `field${index - 1}`
+        else fieldClass = `top-bar${i}`;
+        input.classList.add('all-tasks-fields', className, fieldClass)
+        if (index > 0 && index <= 3) input.classList.add('all-tasks-text-init')
+        if (type === 'submit') {
+            input.classList.add(`save-btn${i}`, 'save-btn-init' )
+        };
+        if (getPriorityData[i] && tag === 'button') {
+            input.classList.add('made-priority', `made-priority${i}`)
+        };
+    }
+
+
 
     renderTopbar(topBar, input, i) {
         topBar.forEach((obj, index) => {
@@ -38,6 +54,31 @@ export class TaskCard {
             topBarBtn.type = type;
             input.append(topBarBtn)
         });
+    }
+
+
+
+    displayValues(input, index, getArray) {
+        const { title, date, details } = getArray;
+        let array = [ 'topBar', title, date, details, 'save' ];
+        input.placeholder = array[index];
+        input.value = array[index]
+    }
+
+
+
+
+
+
+    domInit(reference, viewTitle) {
+        const contents = staticSelectors.dashboardContents;
+        const container = document.createElement('div')
+        container.classList.add(reference)
+        container.innerHTML = `
+        <h3 class="view-title">${viewTitle}</h3>
+        <hr>`
+        contents.prepend(container)
+        return container
     }
 
 

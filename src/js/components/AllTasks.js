@@ -164,23 +164,13 @@ export class AllTasks {
 
 
     tasksList() {
-       const allTasks = this.domInit();
+       const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
        this.renderFields(taskCard.fields(), taskCard.topBar(), allTasks)
        this.clickMakePriority();
        this.clickSave();
        this.removeTask();
     };
 
-    domInit() {
-        const contents = staticSelectors.dashboardContents;
-        const allTasks = document.createElement('div')
-        allTasks.classList.add('all-tasks__container')
-        allTasks.innerHTML = `
-        <h3 class="view-title">All Tasks</h3>
-        <hr>`
-        contents.prepend(allTasks)
-        return allTasks
-    }
 
     renderFields(fields, topBar, allTasks) {
         for (let i = 0; i < getData.length; i++) {
@@ -191,9 +181,11 @@ export class AllTasks {
                 let input = document.createElement(tag)
                 if (tag === 'button') input.textContent = 'Make Priority';
                 if (type) input.type = type
-                this.classListGen(i, input, index, obj)
+
+                taskCard.classListGen(i, input, index, obj)
                 if (index < 1) taskCard.renderTopbar(topBar, input, i)
-                this.displayValues(input, index, i)
+                taskCard.displayValues(input, index, getData[i])
+            
                 fieldContainer.append(input)
             });
             domRemove.checkEmpty();
@@ -201,27 +193,7 @@ export class AllTasks {
         };
     }
 
-    classListGen(i, input, index, obj) {
-        const { tag, type, value, className } = obj;
-        let fieldClass
-        if (index > 0 ) fieldClass = `field${index - 1}`
-        else fieldClass = `top-bar${i}`;
-        input.classList.add('all-tasks-fields', className, fieldClass)
-        if (index > 0 && index <= 3) input.classList.add('all-tasks-text-init')
-        if (type === 'submit') {
-            input.classList.add(`save-btn${i}`, 'save-btn-init' )
-        };
-        if (getPriorityData[i] && tag === 'button') {
-            input.classList.add('made-priority', `made-priority${i}`)
-        };
-    }
 
-    displayValues(input, index, i) {
-        const { title, date, details } = getData[i];
-        let array = [ 'top-bar', title, date, details, 'save' ];
-        input.placeholder = array[index];
-        input.value = array[index]
-    }
 
     classToggle() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
