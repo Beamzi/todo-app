@@ -1,6 +1,6 @@
 
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, getIndex, activeIndices, sharedIndex } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 import { TaskCard } from "./TaskCard";
@@ -31,10 +31,27 @@ export class AllTasks {
               //event.stopPropagation()
             };
         });
+
+
     }
 
     clickProjectIfSaved() {
+    }
+
+
+    syncArrays(j) {
+        if (getProjects[j].length - 1 < getData.length) {
+        let  validIndices = []
+            if (getProjects[arrIndex][i] !== undefined && i > 0) {
+                validIndices.push(i)
+                console.log(validIndices)
+            };
         
+
+        getProjects[arrIndex][i + 1].splice(validIndices[index], 1, undefined)
+        // by using `undefined` here to replace tasks, this maintains the implied length of the array
+        console.log(validIndices)
+        }
     }
 
     clickProjectInList(index) {
@@ -44,8 +61,47 @@ export class AllTasks {
             if (projectOfList) {
                 projectOfList.addEventListener('click', (event) => {
                     console.log(j, 'j', index, 'i')
-                    getProjects[j].splice(index + 1, 1, getData[index])
+
+                    
+
+                    getData.forEach((element, k) => {
+                        if (getProjects[j].length - 1 < getData.length) {
+                            if (typeof getProjects[j][k + 1] !== 'object' ) {
+                                getProjects[j][k + 1] = undefined
+                            }
+                        }
+
+
+                    });
+
+                    sharedIndex.splice(0, 1, index + 1)
+
+                    console.log(sharedIndex, 'sharedIndex in all tasks')
+
+
+
+                    getProjects[j].splice(index + 1, 1, getData[index]);
+
+                    
+                 //   this.syncArrays(j);
                     console.log(getProjects)
+
+
+                    
+
+
+                    /*
+                    for (let i = 0; i < getData.length; i ++) {
+                        getIndex[i] = 'x';
+                    }
+                    getIndex[index] = index
+                    console.log(getIndex, 'getIndex')
+                    */
+
+
+
+
+
                 });
             };
         };
@@ -103,7 +159,7 @@ export class AllTasks {
             this.noTasks();
             domRemove.containerRemove();
             this.tasksList();
-            this.clickProjectInList()
+           // this.clickProjectInList()
         });
     }
     
@@ -150,6 +206,7 @@ export class AllTasks {
                         });
                     };
                 });
+
                 getData[index] = obj
                 console.log(getData)
                 console.log(getProjects)
@@ -167,7 +224,7 @@ export class AllTasks {
        const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
        this.renderFields(taskCard.fields(), taskCard.topBar(), allTasks)
        this.clickMakePriority();
-       this.clickSave();
+       taskCard.clickSave();
        this.removeTask();
     };
 
@@ -185,7 +242,7 @@ export class AllTasks {
                 taskCard.classListGen(i, input, index, obj)
                 if (index < 1) taskCard.renderTopbar(topBar, input, i)
                 taskCard.displayValues(input, index, getData[i])
-            
+
                 fieldContainer.append(input)
             });
             domRemove.checkEmpty();

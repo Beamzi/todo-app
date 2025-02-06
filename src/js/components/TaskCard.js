@@ -1,5 +1,5 @@
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData, projectArrays } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, getIndex, projectArrays, activeIndices, sharedIndex } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 
@@ -39,8 +39,6 @@ export class TaskCard {
         };
     }
 
-
-
     renderTopbar(topBar, input, i) {
         topBar.forEach((obj, index) => {
             const { tag, className, value, textContent, type } = obj;
@@ -56,19 +54,12 @@ export class TaskCard {
         });
     }
 
-
-
     displayValues(input, index, getArray) {
         const { title, date, details } = getArray;
         let array = [ 'topBar', title, date, details, 'save' ];
         input.placeholder = array[index];
         input.value = array[index]
     }
-
-
-
-
-
 
     domInit(reference, viewTitle) {
         const contents = staticSelectors.dashboardContents;
@@ -80,6 +71,52 @@ export class TaskCard {
         contents.prepend(container)
         return container
     }
+
+    clickSave(arrIndex) {
+        const save = document.querySelectorAll('.save-btn')
+        save.forEach((btn, index) => {
+            const fields = document.querySelectorAll(`.task${index} > *`)
+            fields.forEach((field, index) => {
+                field.addEventListener('click', () => {
+                    if (index > 0 && index <= 3) {
+                        btn.classList.remove('save-btn-init')
+                        field.classList.remove('all-tasks-text-init')
+                    };
+                });
+            });
+            btn.addEventListener('click', (event) => {
+                btn.value = 'saved'
+                btn.classList.add('save-btn-click', 'save-animation')
+                let obj = {}
+                event.preventDefault()
+                const fields = document.querySelectorAll(`.task${index} > *`)
+                fields.forEach((field, index) => {
+                    let keys = ['top-bar', 'title', 'date', 'details']
+                    if (index > 0 && index <= 3) {
+                        obj[keys[index]] = field.value
+                        field.classList.add('save-toggle-text')
+                        field.addEventListener('click', () => {
+                            field.classList.remove('save-toggle-text')
+                            btn.classList.remove('save-btn-click')
+                        });
+                    };
+                });
+
+
+                getProjects[arrIndex][sharedIndex[0]] = obj
+                getData[sharedIndex[0] - 1] = getProjects[arrIndex][sharedIndex[0]]
+     
+
+
+                            
+        
+                const madePriority = document.querySelector(`.made-priority${index}`)
+                if (madePriority) {
+                    madePriority.click();
+                };
+            });
+        });
+    };
 
 
 

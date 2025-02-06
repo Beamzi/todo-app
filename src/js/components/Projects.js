@@ -1,5 +1,5 @@
 import { allTasksBtn } from "./EventManager";
-import { getProjectsData, getProjects, projectArrays, getPriorityData } from "./taskData"
+import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex, activeIndices, spliceIndices } from "./taskData"
 import { staticSelectors } from "./utility/selectors"
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
@@ -7,8 +7,10 @@ import { TaskCard } from "./TaskCard";
 const taskCard = new TaskCard
 
 
+
 export class Projects {
     constructor() {
+        this.num = 0;
         this.fieldReferences = [];
         const sidebarProjects = document.querySelector('.dashboard__sidebar__projects')
         sidebarProjects.addEventListener('click', (event) => {
@@ -23,6 +25,7 @@ export class Projects {
                 domRemove.containerRemove()
                 const allTasks = taskCard.domInit(`project__container`, 'Projects');
                 this.renderViewProject(allTasks, arrIndex, taskCard.fields(), taskCard.topBar())
+                taskCard.clickSave(arrIndex);
               //   taskCard.tasksList(arrIndex);
             }
 
@@ -31,19 +34,16 @@ export class Projects {
 
     renderViewProject(allTasks, arrIndex, fields, topBar) {
         for (let j = 0; j < getProjects[arrIndex].length; j++) {
-            if (j > 0) {
+            if (j > 0 && getProjects[arrIndex][j] !== undefined) {
                 const fieldContainer = document.createElement('div')
-                fieldContainer.classList.add('singular-project-task', `task${j - 1}`)
+                fieldContainer.classList.add('singular-project-task')
                 let input
                 fields.forEach((object, index) => {
                     const { tag, type, className, value } = object
                     input = document.createElement(tag);
                     if (type) input.type = type
                     if (value) input.value = value
-                  //  input.classList.add(className)
                     taskCard.classListGen(j, input, index, object)
-
-
                     if (index < 1) taskCard.renderTopbar(topBar, input, j)
                     taskCard.displayValues(input, index, getProjects[arrIndex][j])
                     fieldContainer.append(input)
@@ -51,9 +51,13 @@ export class Projects {
                 allTasks.append(fieldContainer)
             };
         };
+
+
+        const fieldContainer = document.querySelectorAll(`.singular-project-task`)
+        fieldContainer.forEach((element, index) => {
+            element.classList.add(`task${index}`)
+        });
     }
-
-
 
     clickNewProject() {
         const newProjectBtn = document.querySelector('.create-new-project')
@@ -61,13 +65,6 @@ export class Projects {
             this.newProjectfields()
             e.target.style['background-color'] = 'red';
         });
-    }
-
-
-
-
-    projectList() {
-
     }
 
     newProjectfields() {
@@ -128,6 +125,27 @@ export class Projects {
             this.projectList()
         });
     };
+
+
+    blahrg(arrIndex, index) {
+
+        getData.forEach((object, index) => {
+            let  validIndices = []
+                if (getProjects[arrIndex][i] !== undefined && i > 0) {
+                    validIndices.push(i)
+                    console.log(validIndices)
+                };
+            
+
+            getProjects[arrIndex][i + 1].splice(validIndices[index], 1, undefined)
+            // by using `undefined` here to replace tasks, this maintains the implied length of the array
+            console.log(validIndices)
+            this.renderPriority();
+        })
+
+
+    }
+    
 
     fieldRemove() {
         for (let field of this.fieldReferences) {
