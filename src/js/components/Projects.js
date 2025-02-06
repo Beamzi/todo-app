@@ -1,5 +1,5 @@
 import { allTasksBtn } from "./EventManager";
-import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex, activeIndices, spliceIndices } from "./taskData"
+import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex } from "./taskData"
 import { staticSelectors } from "./utility/selectors"
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove

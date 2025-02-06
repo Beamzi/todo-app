@@ -1,6 +1,7 @@
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
 import { getData, getPriorityData, getProjects, getProjectsData, getIndex, projectArrays, activeIndices, sharedIndex } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
+import { allTasksBtn } from "./EventManager";
 const domRemove = new DOMRemove
 
 export class TaskCard {
@@ -102,14 +103,25 @@ export class TaskCard {
                     };
                 });
 
-
-                getProjects[arrIndex][sharedIndex[0]] = obj
-                getData[sharedIndex[0] - 1] = getProjects[arrIndex][sharedIndex[0]]
-     
+                const allTasksContainer = document.querySelector('.all-tasks__container')
 
 
-                            
-        
+
+                if (allTasksContainer) {
+                    getData[index] = obj
+                    getProjects.forEach((object, j) => {
+                        if (getProjects[j][sharedIndex[0]]) {
+                            getProjects[j][index + 1] = getData[index]
+                        }
+                    })
+                }
+                else {
+                    getProjects[arrIndex][sharedIndex[0]] = obj
+                    getData[sharedIndex[0] - 1] = getProjects[arrIndex][sharedIndex[0]] 
+
+                }
+
+                   
                 const madePriority = document.querySelector(`.made-priority${index}`)
                 if (madePriority) {
                     madePriority.click();
@@ -117,9 +129,6 @@ export class TaskCard {
             });
         });
     };
-
-
-
 }
 
 

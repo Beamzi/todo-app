@@ -1,6 +1,6 @@
 
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData, getIndex, activeIndices, sharedIndex } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, getIndex, sharedIndex } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 import { TaskCard } from "./TaskCard";
@@ -20,7 +20,6 @@ export class AllTasks {
         };
     }
 
-
     clickProjects(event) {
         getData.forEach((fas, index) => {
             if (event.target.classList.contains(`project-list${index}`)) {
@@ -31,8 +30,6 @@ export class AllTasks {
               //event.stopPropagation()
             };
         });
-
-
     }
 
     clickProjectIfSaved() {
@@ -46,8 +43,6 @@ export class AllTasks {
                 validIndices.push(i)
                 console.log(validIndices)
             };
-        
-
         getProjects[arrIndex][i + 1].splice(validIndices[index], 1, undefined)
         // by using `undefined` here to replace tasks, this maintains the implied length of the array
         console.log(validIndices)
@@ -60,48 +55,15 @@ export class AllTasks {
             const projectOfList = document.querySelector(`.project-${j}-of-list-${index}`)
             if (projectOfList) {
                 projectOfList.addEventListener('click', (event) => {
-                    console.log(j, 'j', index, 'i')
-
-                    
-
                     getData.forEach((element, k) => {
                         if (getProjects[j].length - 1 < getData.length) {
                             if (typeof getProjects[j][k + 1] !== 'object' ) {
                                 getProjects[j][k + 1] = undefined
                             }
                         }
-
-
                     });
-
                     sharedIndex.splice(0, 1, index + 1)
-
-                    console.log(sharedIndex, 'sharedIndex in all tasks')
-
-
-
                     getProjects[j].splice(index + 1, 1, getData[index]);
-
-                    
-                 //   this.syncArrays(j);
-                    console.log(getProjects)
-
-
-                    
-
-
-                    /*
-                    for (let i = 0; i < getData.length; i ++) {
-                        getIndex[i] = 'x';
-                    }
-                    getIndex[index] = index
-                    console.log(getIndex, 'getIndex')
-                    */
-
-
-
-
-
                 });
             };
         };
