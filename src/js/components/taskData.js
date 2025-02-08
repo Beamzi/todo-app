@@ -16,7 +16,12 @@ export let getData = [];
 // recevies copies of the object instances that are 'priortised'
 export let getPriorityData = [];
 
+
 export let sharedIndex = [];
+
+export let recieveIndex = [];
+
+export let getValue = [];
 
 
 export let getProjects = [] 

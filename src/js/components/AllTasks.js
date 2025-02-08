@@ -1,6 +1,6 @@
 
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData, getIndex, sharedIndex } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, getIndex, sharedIndex, getValue, recieveIndex } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 import { TaskCard } from "./TaskCard";
@@ -55,15 +55,64 @@ export class AllTasks {
             const projectOfList = document.querySelector(`.project-${j}-of-list-${index}`)
             if (projectOfList) {
                 projectOfList.addEventListener('click', (event) => {
+
+
+                    /*
                     getData.forEach((element, k) => {
+
+
+
                         if (getProjects[j].length - 1 < getData.length) {
                             if (typeof getProjects[j][k + 1] !== 'object' ) {
                                 getProjects[j][k + 1] = undefined
                             }
                         }
-                    });
-                    sharedIndex.splice(0, 1, index + 1)
-                    getProjects[j].splice(index + 1, 1, getData[index]);
+
+                    });*/
+
+
+                    //sharedIndex.splice(0, 1, index + 1)
+                   //  sharedIndex[index] = index + 1
+
+                 //  getValue.splice(index + 1, 1, [getData[index].title, getProjects[j][0], index + 1, ] )
+
+                  // sharedIndex.splice(index, 1, index + 1)
+                  // sharedIndex.splice(0, 1, index + 1)
+               //   recieveIndex.push([sharedIndex])
+
+
+
+               //    sharedIndex.push(index + 1)
+                //  sharedIndex.splice(index, 1, index + 1)
+
+                //     sharedIndex[index] = index + 1
+
+                    getProjects[j].push(getData[index])
+                  // getProjects[j].splice(index + 1, 1, getData[index])
+                    console.log(index, 'index')
+
+                    console.log(getProjects, 'getProjects alltasks')
+                    console.log(getData, 'getData alltasks')
+
+
+                 //   getValue.push([getProjects[j][0], index + 1])
+
+
+                //    getValue.push([getProjects[j][0], index + 1, getData[index]])
+                  // getValue.push([getProjects[j][0], index + 1, getData[index].title] )
+                  // getValue.splice(index + 1, 1, [getProjects[j][0], index + 1, getData[index].title] )
+
+                   // console.log(getValue, ' getvalue')
+
+
+
+
+
+                 //   console.log(getValue - 1, 'getValue[arrIndex][1] - 1')
+
+
+
+
                 });
             };
         };

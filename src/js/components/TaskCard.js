@@ -1,5 +1,5 @@
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
-import { getData, getPriorityData, getProjects, getProjectsData, getIndex, projectArrays, activeIndices, sharedIndex } from "./taskData";
+import { getData, getPriorityData, getProjects, getProjectsData, getIndex, projectArrays, activeIndices, sharedIndex, getValue, recieveIndex, taskData } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 import { allTasksBtn } from "./EventManager";
 const domRemove = new DOMRemove
@@ -73,7 +73,9 @@ export class TaskCard {
         return container
     }
 
+
     clickSave(arrIndex) {
+
         const save = document.querySelectorAll('.save-btn')
         save.forEach((btn, index) => {
             const fields = document.querySelectorAll(`.task${index} > *`)
@@ -89,12 +91,14 @@ export class TaskCard {
                 btn.value = 'saved'
                 btn.classList.add('save-btn-click', 'save-animation')
                 let obj = {}
+                let scrape = {}
                 event.preventDefault()
                 const fields = document.querySelectorAll(`.task${index} > *`)
                 fields.forEach((field, index) => {
                     let keys = ['top-bar', 'title', 'date', 'details']
                     if (index > 0 && index <= 3) {
                         obj[keys[index]] = field.value
+
                         field.classList.add('save-toggle-text')
                         field.addEventListener('click', () => {
                             field.classList.remove('save-toggle-text')
@@ -103,23 +107,52 @@ export class TaskCard {
                     };
                 });
 
+
                 const allTasksContainer = document.querySelector('.all-tasks__container')
 
 
+                let trueIndex = []
+                for (let i = 0; i < getProjects[arrIndex].length; i++) {
+                    if (typeof getProjects[arrIndex][i] === 'object') {
 
-                if (allTasksContainer) {
-                    getData[index] = obj
-                    getProjects.forEach((object, j) => {
-                        if (getProjects[j][sharedIndex[0]]) {
-                            getProjects[j][index + 1] = getData[index]
-                        }
-                    })
-                }
-                else {
-                    getProjects[arrIndex][sharedIndex[0]] = obj
-                    getData[sharedIndex[0] - 1] = getProjects[arrIndex][sharedIndex[0]] 
 
+                          //  console.log(i)
+                            trueIndex[0] = i
+
+                            
+                        //    console.log(getProjects[arrIndex][i].title, 'getProjects [arrIndex] title')
+                          //  console.log(getData[i - 1].title, 'getData [i] title')
+                            break
+
+                        
+                    }
                 }
+
+
+
+                getProjects[arrIndex][index + 1] = obj
+
+                console.log(index, 'index')
+                console.log(arrIndex, 'arrIndex')
+
+
+
+
+                /*
+                getProjects[arrIndex].forEach((item, i) => {
+                    if (typeof item === 'object') {
+                        if (item.title === getData[i - 1].title)
+                        getProjects[arrIndex][i] = obj
+
+                        console.log(item.title, 'getProjects [arrIndex] title')
+                        console.log(getData[i - 1].title, 'getData [i] title')
+                    }
+                }); */
+
+                console.log(getProjects, 'getProjects taskCard')
+                console.log(getData, 'getData taskCard')
+                
+
 
                    
                 const madePriority = document.querySelector(`.made-priority${index}`)
@@ -129,6 +162,14 @@ export class TaskCard {
             });
         });
     };
+
+
+    getTrueIterator(arrIndex) {
+
+
+    }
+
+
+
+
 }
-
-
