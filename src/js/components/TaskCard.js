@@ -107,51 +107,11 @@ export class TaskCard {
                     };
                 });
 
-
-                const allTasksContainer = document.querySelector('.all-tasks__container')
-
-
-                let trueIndex = []
-                for (let i = 0; i < getProjects[arrIndex].length; i++) {
-                    if (typeof getProjects[arrIndex][i] === 'object') {
-
-
-                          //  console.log(i)
-                            trueIndex[0] = i
-
-                            
-                        //    console.log(getProjects[arrIndex][i].title, 'getProjects [arrIndex] title')
-                          //  console.log(getData[i - 1].title, 'getData [i] title')
-                            break
-
-                        
-                    }
-                }
-
-
-
                 getProjects[arrIndex][index + 1] = obj
-
-                console.log(index, 'index')
-                console.log(arrIndex, 'arrIndex')
+                getData[sharedIndex[arrIndex][1]] = getProjects[arrIndex][index + 1]
 
 
 
-
-                /*
-                getProjects[arrIndex].forEach((item, i) => {
-                    if (typeof item === 'object') {
-                        if (item.title === getData[i - 1].title)
-                        getProjects[arrIndex][i] = obj
-
-                        console.log(item.title, 'getProjects [arrIndex] title')
-                        console.log(getData[i - 1].title, 'getData [i] title')
-                    }
-                }); */
-
-                console.log(getProjects, 'getProjects taskCard')
-                console.log(getData, 'getData taskCard')
-                
 
 
                    
