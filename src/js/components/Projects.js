@@ -120,6 +120,8 @@ export class Projects {
             let projectTitle = this.fieldReferences[0].value
 
             getProjects.push(this.projectInstances(projectTitle))
+
+            //this will eventually mirror the true index values of getProjects
             sharedIndex.push(this.projectInstances(projectTitle))
             
             this.fieldRemove();

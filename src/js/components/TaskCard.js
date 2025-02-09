@@ -108,13 +108,27 @@ export class TaskCard {
                 });
 
 
+                const allTasksContainer = document.querySelector('.all-tasks__container')
 
+                if (allTasksContainer) {
+                    getData[index] = obj
+                    for (let arr = 0; arr < sharedIndex.length; arr++) {
+                        if (sharedIndex[arr].includes(index) === true) {
+                            for (let j = 0; j < sharedIndex[arr].length; j++) {
+                                if (index === sharedIndex[arr][j]) {
+                                    getProjects[arr][j] = getData[index]
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    getProjects[arrIndex][index + 1] = obj
+                    getData[sharedIndex[arrIndex][index + 1]] = getProjects[arrIndex][index + 1]
+                }
 
-                getProjects[arrIndex][index + 1] = obj
-                getData[sharedIndex[arrIndex][index + 1]] = getProjects[arrIndex][index + 1]
 
                 
-                console.log(sharedIndex[arrIndex][index + 1])
                
 
 
