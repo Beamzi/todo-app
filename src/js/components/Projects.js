@@ -1,5 +1,5 @@
 import { allTasksBtn } from "./EventManager";
-import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex } from "./taskData"
+import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex, sharedIndex } from "./taskData"
 import { staticSelectors } from "./utility/selectors"
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
@@ -120,6 +120,8 @@ export class Projects {
             let projectTitle = this.fieldReferences[0].value
 
             getProjects.push(this.projectInstances(projectTitle))
+            sharedIndex.push(this.projectInstances(projectTitle))
+            
             this.fieldRemove();
             console.log(getProjects)
             this.projectList()

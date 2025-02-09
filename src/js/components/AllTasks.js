@@ -36,18 +36,7 @@ export class AllTasks {
     }
 
 
-    syncArrays(j) {
-        if (getProjects[j].length - 1 < getData.length) {
-        let  validIndices = []
-            if (getProjects[arrIndex][i] !== undefined && i > 0) {
-                validIndices.push(i)
-                console.log(validIndices)
-            };
-        getProjects[arrIndex][i + 1].splice(validIndices[index], 1, undefined)
-        // by using `undefined` here to replace tasks, this maintains the implied length of the array
-        console.log(validIndices)
-        }
-    }
+
 
     clickProjectInList(index) {
             //index from getData in clickProjects
@@ -58,7 +47,38 @@ export class AllTasks {
 
                     getProjects[j].push(getData[index])
 
-                    sharedIndex[j] = [getProjects[j][0], index]
+
+                //    sharedIndex[j] = [getProjects[j][0]]
+
+                    sharedIndex[j].push(index)
+                    
+                  //  sharedIndex.push([getProjects[j][0], index])
+
+                 //   console.log(sharedIndex[j][index], 'sharedIndex[j][index]')
+                    
+                    console.log(sharedIndex, 'sharedIndex')
+
+
+                //    sharedIndex.push([getProjects[j][0], index])
+
+                //    sharedIndex[j] = [getProjects[j][0], index]
+
+                   // console.log(sharedIndex[j][index], 'sharedIndex[j][0]')
+
+                    
+                  //  console.log(sharedIndex[j][0], 'sharedIndex[j][0]')
+
+                //    getProjects[j].splice(index + 1, 1, getData[index]);
+
+
+                 //   sharedIndex.splice(0, 1, index + 1)
+                 
+
+
+
+                    console.log(getProjects, 'getProjects alltasks')
+                    
+
 
 
                 });

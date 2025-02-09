@@ -107,8 +107,15 @@ export class TaskCard {
                     };
                 });
 
+
+
+
                 getProjects[arrIndex][index + 1] = obj
-                getData[sharedIndex[arrIndex][1]] = getProjects[arrIndex][index + 1]
+                getData[sharedIndex[arrIndex][index + 1]] = getProjects[arrIndex][index + 1]
+
+                
+                console.log(sharedIndex[arrIndex][index + 1])
+               
 
 
 
