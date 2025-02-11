@@ -53,3 +53,5 @@ maybe add a checklist thing to tasks(?)
 create new project, prrevent empty field submission
 
 make projects able to be deleted on side bar and have that reflects in all tasks project list
+
+add an undo button after a task has been removed - think deletion array that stores newly deleted tasks. doesnt have to be shared state; just on the relative view state

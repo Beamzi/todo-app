@@ -1,4 +1,5 @@
 import { dynamicSelectors, staticSelectors } from "./utility/selectors";
+const { projectContainer } = dynamicSelectors();
 import { getData, getPriorityData, getProjects, getProjectsData, getIndex, projectArrays, activeIndices, sharedIndex, getValue, recieveIndex, taskData } from "./taskData";
 import { DOMRemove } from "./DOMRemove";
 import { allTasksBtn } from "./EventManager";
@@ -40,13 +41,13 @@ export class TaskCard {
         };
     }
 
-    renderTopbar(topBar, input, i) {
+    renderTopbar(topBar, input, i, section) {
         topBar.forEach((obj, index) => {
             const { tag, className, value, textContent, type } = obj;
             let topBarBtn = document.createElement(tag)
             if (value) topBarBtn.value = value
             if (value === 'remove') {
-                topBarBtn.classList.add(className, `removeBtn${i}`) 
+                topBarBtn.classList.add(className, `removeBtn${i}`, `${section}-remove-btn-${i}`) 
             }
             if (value === 'projects') topBarBtn.classList.add(className, `project-list${i}`)
             topBarBtn.textContent = textContent;
@@ -56,10 +57,10 @@ export class TaskCard {
     }
 
     displayValues(input, index, getArray) {
-        const { title, date, details } = getArray;
-        let array = [ 'topBar', title, date, details, 'save' ];
-        input.placeholder = array[index];
-        input.value = array[index]
+            const { title, date, details } = getArray;
+            let array = [ 'topBar', title, date, details, 'save' ];
+            input.placeholder = array[index];
+            input.value = array[index]
     }
 
     domInit(reference, viewTitle) {
@@ -107,13 +108,13 @@ export class TaskCard {
                     };
                 });
 
-
                 const allTasksContainer = document.querySelector('.all-tasks__container')
 
                 if (allTasksContainer) {
                     getData[index] = obj
+
                     for (let arr = 0; arr < sharedIndex.length; arr++) {
-                        if (sharedIndex[arr].includes(index) === true) {
+                        if (sharedIndex[arr].includes(index)) {
                             for (let j = 0; j < sharedIndex[arr].length; j++) {
                                 if (index === sharedIndex[arr][j]) {
                                     getProjects[arr][j] = getData[index]
@@ -125,17 +126,8 @@ export class TaskCard {
                 else {
                     getProjects[arrIndex][index + 1] = obj
                     getData[sharedIndex[arrIndex][index + 1]] = getProjects[arrIndex][index + 1]
-                }
+                };
 
-
-                
-               
-
-
-
-
-
-                   
                 const madePriority = document.querySelector(`.made-priority${index}`)
                 if (madePriority) {
                     madePriority.click();
@@ -144,11 +136,6 @@ export class TaskCard {
         });
     };
 
-
-    getTrueIterator(arrIndex) {
-
-
-    }
 
 
 

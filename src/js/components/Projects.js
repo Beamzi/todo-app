@@ -1,6 +1,7 @@
 import { allTasksBtn } from "./EventManager";
 import { getProjectsData, getProjects, projectArrays, getPriorityData, getData, getIndex, sharedIndex } from "./taskData"
-import { staticSelectors } from "./utility/selectors"
+import { staticSelectors, dynamicSelectors } from "./utility/selectors"
+const { projectContainer } = dynamicSelectors();
 import { DOMRemove } from "./DOMRemove";
 const domRemove = new DOMRemove
 import { TaskCard } from "./TaskCard";
@@ -12,29 +13,51 @@ export class Projects {
     constructor() {
         this.num = 0;
         this.fieldReferences = [];
-        const sidebarProjects = document.querySelector('.dashboard__sidebar__projects')
+        const sidebarProjects = document.querySelector('.dashboard')
         sidebarProjects.addEventListener('click', (event) => {
             this.clickViewProject(event)
-        })
+        });
     }
 
     clickViewProject(event) {
-        getProjects.forEach((item, arrIndex) => {
+        getProjects.forEach((project, arrIndex) => {
             if (event.target.classList.contains(`dashboard-project-btn${arrIndex}`)) {
-                domRemove.checkEmpty();
-                domRemove.containerRemove()
-                const allTasks = taskCard.domInit(`project__container`, 'Projects');
-                this.renderViewProject(allTasks, arrIndex, taskCard.fields(), taskCard.topBar())
+                this.refreshProjectView(arrIndex)
                 taskCard.clickSave(arrIndex);
-              //   taskCard.tasksList(arrIndex);
             }
-
-        })
+            this.clickTaskRemove(project, arrIndex, event)
+        });
     }
 
-    renderViewProject(allTasks, arrIndex, fields, topBar) {
+    clickTaskRemove(project, arrIndex, event) {
+        project.forEach((task, index) => {
+            if (event.target.classList.contains(`project${arrIndex}-remove-btn-${index}`)) {
+                console.log(getProjects[arrIndex])
+                this.taskRemove(event, arrIndex, index)
+            }
+        });
+    }
+
+    refreshProjectView(arrIndex) {
+        domRemove.checkEmpty();
+        domRemove.containerRemove()
+        const allTasks = taskCard.domInit(`project__container`, 'Projects');
+        this.renderProjectTasks(allTasks, arrIndex, taskCard.fields(), taskCard.topBar())
+    }
+
+
+    taskRemove(event, arrIndex, index) {
+        getProjects[arrIndex].splice(index + 1, 1)
+        console.log(index)
+        sharedIndex[arrIndex].splice(index + 1, 1)
+        this.refreshProjectView(arrIndex)
+    }
+
+    renderProjectTasks(allTasks, arrIndex, fields, topBar) {
         for (let j = 0; j < getProjects[arrIndex].length; j++) {
+
             if (j > 0 && getProjects[arrIndex][j] !== undefined) {
+
                 const fieldContainer = document.createElement('div')
                 fieldContainer.classList.add('singular-project-task')
                 let input
@@ -43,15 +66,18 @@ export class Projects {
                     input = document.createElement(tag);
                     if (type) input.type = type
                     if (value) input.value = value
+                    if (type === 'submit') {
+                        input.dataset.indexNumber = j
+                    }
                     taskCard.classListGen(j, input, index, object)
-                    if (index < 1) taskCard.renderTopbar(topBar, input, j)
+                    let i = j - 1
+                    if (index < 1) taskCard.renderTopbar(topBar, input, i, `project${arrIndex}`)
                     taskCard.displayValues(input, index, getProjects[arrIndex][j])
                     fieldContainer.append(input)
                 });
                 allTasks.append(fieldContainer)
             };
         };
-
 
         const fieldContainer = document.querySelectorAll(`.singular-project-task`)
         fieldContainer.forEach((element, index) => {
@@ -149,6 +175,8 @@ export class Projects {
 
 
     }
+
+
     
 
     fieldRemove() {

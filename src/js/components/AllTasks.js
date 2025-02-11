@@ -33,7 +33,12 @@ export class AllTasks {
     }
 
     clickProjectIfSaved() {
+
     }
+
+
+
+
 
 
 
@@ -46,11 +51,11 @@ export class AllTasks {
                 projectOfList.addEventListener('click', (event) => {
 
                     getProjects[j].push(getData[index])
-
-
-                //    sharedIndex[j] = [getProjects[j][0]]
-
                     sharedIndex[j].push(index)
+
+
+                                    //    sharedIndex[j] = [getProjects[j][0]]
+
                     
                   //  sharedIndex.push([getProjects[j][0], index])
 
@@ -98,19 +103,49 @@ export class AllTasks {
         this.references = [];
     }
 
+
     removeTask() {
         const allTasksBtn = staticSelectors.allTasksBtn
         getData.forEach((obj, index) => {
             const remove = document.querySelector(`.removeBtn${index}`)
             if (remove) {
                 remove.addEventListener('click', () => {
-                    getData.splice(index, 1)
-                    getPriorityData.splice(index, 1);
-                    allTasksBtn.click();
+                this.unassignTaskTrace(index)
+                this.adjustIndices(index)
+                getData.splice(index, 1)
+                getPriorityData.splice(index, 1);
+                allTasksBtn.click();
                 });
-            };
+            }
         });
     }
+
+    unassignTaskTrace(index) {
+        for (let arr = 0; arr < sharedIndex.length; arr++) {
+            if (sharedIndex[arr].includes(index)) {
+                for (let j = 0; j < sharedIndex[arr].length; j++) {
+                    if (index === sharedIndex[arr][j]) {
+                        sharedIndex[arr].splice(j, 1)
+                        getProjects[arr].splice(j, 1)
+                    }
+                }
+            }
+        }
+    }
+
+    adjustIndices(index) {
+        for (let arr = 0; arr < sharedIndex.length; arr++) {
+            for (let i = 0; i < sharedIndex[arr].length; i++) {
+                if (i > 0) {
+                    if (index < sharedIndex[arr][i]) {
+                        sharedIndex[arr][i] -= 1
+                    }
+                } 
+            }
+        }
+    }
+
+
 
     clickAllTasks() {
         const allTasksBtn = document.querySelector('.all-tasks-btn');
@@ -187,11 +222,13 @@ export class AllTasks {
        this.clickMakePriority();
        taskCard.clickSave();
        this.removeTask();
+
     };
 
 
     renderFields(fields, topBar, allTasks) {
         for (let i = 0; i < getData.length; i++) {
+            if (getData[i] !== undefined) {
             const fieldContainer = document.createElement('div')
             fieldContainer.classList.add('singular-task', `task${i}`)
             fields.forEach((obj, index) => {
@@ -199,7 +236,6 @@ export class AllTasks {
                 let input = document.createElement(tag)
                 if (tag === 'button') input.textContent = 'Make Priority';
                 if (type) input.type = type
-
                 taskCard.classListGen(i, input, index, obj)
                 if (index < 1) taskCard.renderTopbar(topBar, input, i)
                 taskCard.displayValues(input, index, getData[i])
@@ -208,6 +244,7 @@ export class AllTasks {
             });
             domRemove.checkEmpty();
             allTasks.append(fieldContainer)
+            }
         };
     }
 
