@@ -24,7 +24,6 @@ button, .save-btn, .submit, ul {
 .all-tasks-text {
     color: rgb(92, 92, 92);
     box-shadow: rgb(214, 214, 214) 0px 0px 1px 1px;
-
 }
 
 .all-tasks-text-init {
@@ -36,7 +35,6 @@ button, .save-btn, .submit, ul {
     color: rgb(155, 155, 155);
     background-color: rgba(206, 206, 206, 0.63) !important; 
     box-shadow: black 0px 0px 0px 0px;
-
 }
 
 .save-btn-init {
@@ -290,7 +288,42 @@ p, span {
 
 .minimise {
     display: none;
+    animation: ease forwards 0.1s is-minimised
 
+}
+
+@keyframes is-minimised {
+    0% {
+
+    }
+    100% {
+
+    }
+}
+
+.mini-animation {
+    background-color: red;
+    animation: ease forwards 0.2s mini-animation 
+
+}
+
+@keyframes mini-animation {
+    0% {
+        transform: scaleY(1);
+    }
+    90% {
+    }
+    100% {
+        transform: scaleY(0);
+        display: none;
+
+    }
+}
+
+.no-transition {
+
+    transition: none !important;
+    animation: none !important;
 }
 
 .singular-task, .singular-project-task {

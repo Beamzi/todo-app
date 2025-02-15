@@ -16,9 +16,13 @@ import { Projects } from './components/Projects.js';
 const projects = new Projects
 
 overview.welcomePanel();
+
 priorityTask.clickPriorityTasks()
+
 task.clickNewTask();
+
 //allTasks.clickAllTasks();
 allTasks.delegate();
+
 projects.clickNewProject();
 

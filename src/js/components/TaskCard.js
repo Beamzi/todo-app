@@ -28,7 +28,7 @@ export class TaskCard {
     }
 
     
-    classListGen(i, input, index, obj) {
+    classListGen(i, input, index, obj, minimised) {
         const { tag, type, value, className } = obj;
         let fieldClass
         if (index > 0 ) fieldClass = `field${index - 1}`
@@ -41,10 +41,10 @@ export class TaskCard {
         if (getPriorityData[i] && tag === 'button') {
             input.classList.add('made-priority', `made-priority${i}`)
         };
-        if (tag !== 'div' && type !== 'text' ) input.classList.add( `minimise-fields-${i}`)
+        if (tag !== 'div' && type !== 'text' ) input.classList.add(`minimise-fields-${i}`, `${minimised}`)
     }
 
-    renderTopbar(topBar, input, i, textEvent, section, iconClass) {
+    renderTopbar(topBar, input, i, textEvent, section) {
 
         let projectWrapper = document.createElement('div')
         projectWrapper.classList.add('project-wrapper')

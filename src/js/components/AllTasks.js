@@ -9,10 +9,12 @@ const taskCard = new TaskCard
 
 export class AllTasks {
     constructor() {
+        this.dashboardContents = staticSelectors.dashboard;
         this.references = [];
         this.txtAssigned = [];
-        this.dashboardContents = staticSelectors.dashboard;
-        // Ensure the listener is only attached once
+        this.isMinimised = [];
+        this.miniState
+        this.onOff
     }
 
     delegate() {
@@ -31,17 +33,13 @@ export class AllTasks {
             domRemove.checkEmpty();
             this.noTasks();
             domRemove.containerRemove();
+            this.onOff = 'off'
 
             this.tasksList();
-
-
+            console.log(this.miniState)
 
             this.assigned();
-
-            // this.clickProjectInList()
          }
- 
-
     }
 
     clickProjects(event) {
@@ -56,19 +54,28 @@ export class AllTasks {
             };
             if (event.target.classList.contains(`minimise-btn-${index}`)) {
                 this.minimiseTask(event, index)
-            }
-
-          //this.um(index, event)
+            };
         });
     }
 
+
+
+    
     minimiseTask(event, index) {
-        event.target.classList.toggle(`minimise-btn-${index}-is-minimised`)
         const fieldsToMinimise = document.querySelectorAll(`.minimise-fields-${index}`)
-        fieldsToMinimise.forEach((element, index) => {
-            element.classList.toggle('minimise')
-        })
+        fieldsToMinimise.forEach((element, i, arr) => {
+            if (element.classList.contains('minimise') && !element.classList.contains('mini-animation')) {
+                element.classList.remove('minimise')
+                this.isMinimised[index] = false
+            }
+            else {
+            element.classList.toggle('mini-animation')
+                if (element.classList.contains('mini-animation')) this.isMinimised[index] = true
+                else  this.isMinimised[index] = false
+            }
+        });
     }
+    
 
     tasksList() {
         const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
@@ -76,7 +83,7 @@ export class AllTasks {
         this.clickMakePriority();
         taskCard.clickSave();
         this.removeTask();
-     };
+    };
 
 
     assigned() {
@@ -115,7 +122,6 @@ export class AllTasks {
         });
     }
 
-
     clickProjectInList(index, projects) {
             //index from getData in clickProjects
         for (let j = 0; j < getProjects.length; j++) {
@@ -130,7 +136,7 @@ export class AllTasks {
 
 
                     domRemove.containerRemove();
-                     this.tasksList();
+                    this.tasksList();
                     this.assigned();
                     this.assignedTrans(index)
                 });
@@ -177,8 +183,6 @@ export class AllTasks {
         });
         this.references = [];
     }
-
-
 
     removeTask() {
         const allTasksBtn = staticSelectors.allTasksBtn
@@ -238,9 +242,6 @@ export class AllTasks {
 
 
 
-
-
-
     renderFields(fields, topBar, allTasks) {
         for (let i = 0; i < getData.length; i++) {
             if (getData[i] !== undefined) {
@@ -251,14 +252,29 @@ export class AllTasks {
                 let input = document.createElement(tag)
                 if (tag === 'button') input.textContent = 'Make Priority';
                 if (type) input.type = type
-                taskCard.classListGen(i, input, index, obj)
+
+
+                let minimise = 'z';
+                if (this.isMinimised[i] === true) { 
+                    minimise = 'minimise'
+                }
+                
+                
+                taskCard.classListGen(i, input, index, obj, minimise)
+                console.log(minimise)
+                console.log(this.isMinimised)
+                console.log(this.onOff)
+
+
                 this.txtAssigned[0] = 'projects'
                 sharedIndex.forEach((arr, j) => {
                     if (sharedIndex[j].includes(i)) {
                         this.txtAssigned[0] = `Assigned to ${sharedIndex[j][0]}`
-                    }                
+                    }
                 });
+
                 if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0])
+
                 taskCard.displayValues(input, index, getData[i])
                 fieldContainer.append(input)
             });
