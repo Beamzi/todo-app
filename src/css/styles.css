@@ -214,7 +214,6 @@ p, span {
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
-
 }
 
 .all-tasks__container, .priority-tasks__container, .welcome__container {
@@ -286,56 +285,68 @@ p, span {
     position: relative;
 }
 
-.minimise {
-    display: none;
-    animation: ease forwards 0.1s is-minimised
 
+.container-anima {
+    transform-origin: top;
+    animation: ease forwards 0.2s container-animation
 }
-
-@keyframes is-minimised {
+@keyframes container-animation {
     0% {
-
+        opacity: 0.5;
+        height: 100%;
     }
     100% {
-
+        opacity: 1;
+        height: 16.5%;
+        filter: blur(1)
     }
 }
 
-.mini-animation {
-    background-color: red;
-    animation: ease forwards 0.2s mini-animation 
-
+.minimise {
+    display: none;
 }
 
-@keyframes mini-animation {
+.mini-anima-close {
+    animation: ease forwards 0.2s mini-close
+}
+@keyframes mini-close {
     0% {
         transform: scaleY(1);
-    }
-    90% {
     }
     100% {
         transform: scaleY(0);
         display: none;
-
     }
 }
 
-.no-transition {
 
-    transition: none !important;
-    animation: none !important;
+.mini-anima-open {
+    animation: ease forwards 0.2s mini-open 
 }
+@keyframes mini-open {
+    0% {
+        transform: scaleY(0);
+        display: none;
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+
+
 
 .singular-task, .singular-project-task {
 
 
     position: relative;
-    box-shadow: 0px 0px 1px 1px;
+    box-shadow: 0px 0px 100px 0px rgba(0, 8, 77, 0.308); 
+    border-radius: 15px;
     display: flex;
     flex-wrap: wrap;
     min-width: 80%;
     max-width: 80%;
-    border: 3px red solid;
+    margin-bottom: 30px;
 
     :nth-child(-n + 4) {
         flex-basis: 100%; 
@@ -350,7 +361,9 @@ p, span {
 
 
 
+
     .all-tasks-text, .field3, .field4 {
+
         padding: 10px;
         margin: 4px;
         border-radius: 7px;

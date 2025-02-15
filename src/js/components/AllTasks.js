@@ -13,8 +13,6 @@ export class AllTasks {
         this.references = [];
         this.txtAssigned = [];
         this.isMinimised = [];
-        this.miniState
-        this.onOff
     }
 
     delegate() {
@@ -33,11 +31,7 @@ export class AllTasks {
             domRemove.checkEmpty();
             this.noTasks();
             domRemove.containerRemove();
-            this.onOff = 'off'
-
             this.tasksList();
-            console.log(this.miniState)
-
             this.assigned();
          }
     }
@@ -53,29 +47,77 @@ export class AllTasks {
                 console.log(sharedIndex)
             };
             if (event.target.classList.contains(`minimise-btn-${index}`)) {
+                this.miniIcon(index)
+
                 this.minimiseTask(event, index)
             };
         });
     }
 
+    
+    miniIcon(index) {
+        const icon = document.querySelector(`.minimise-icon-${index}`)
+
+        /*
+        if (icon.classList.contains('fa-window-maximize')) {
+            icon.classList.add('fa-window-minimize')
+            icon.classList.remove('fa-window-maximize')
+        }
+        else if (icon.classList.contains('fa-window-minimize')) {
+            icon.classList.add('fa-window-maximize')
+            icon.classList.remove('fa-window-minimize')
+        } */
+
+
+        const mini = icon.classList.toggle('fa-window-minimize')
+        icon.classList.toggle('fa-window-maximize', !mini)
+        
+    }
+
+    
 
 
     
     minimiseTask(event, index) {
+        this.miniContainer(index)
         const fieldsToMinimise = document.querySelectorAll(`.minimise-fields-${index}`)
         fieldsToMinimise.forEach((element, i, arr) => {
-            if (element.classList.contains('minimise') && !element.classList.contains('mini-animation')) {
-                element.classList.remove('minimise')
+            if (element.classList.contains('minimise') && !element.classList.contains('mini-anima-close')) {
                 this.isMinimised[index] = false
+                element.classList.remove('minimise')
+                element.classList.add('mini-anima-open')
             }
             else {
-            element.classList.toggle('mini-animation')
-                if (element.classList.contains('mini-animation')) this.isMinimised[index] = true
-                else  this.isMinimised[index] = false
+            element.classList.toggle('mini-anima-close')
+                if (element.classList.contains('mini-anima-close')) {
+                    this.isMinimised[index] = true
+                    element.classList.remove('mini-anima-open')
+                    }
+                else  { 
+                    this.isMinimised[index] = false
+                    element.classList.add('mini-anima-open')
+                }
             }
         });
     }
+
+    miniContainer(index) {
+        const container = document.querySelector(`.task${index}`)
+        if (container.classList.contains('minimise') && !container.classList.contains('container-anima')) {
+            container.classList.remove('minimise')
+            this.isMinimised[index] = false
+        }
+
+    else {
+        container.classList.toggle('container-anima')
+            if (container.classList.contains('container-anima')) this.isMinimised[index] = true
+            else  this.isMinimised[index] = false
+        }
+
+    }
+
     
+
 
     tasksList() {
         const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
@@ -245,8 +287,17 @@ export class AllTasks {
     renderFields(fields, topBar, allTasks) {
         for (let i = 0; i < getData.length; i++) {
             if (getData[i] !== undefined) {
+            
             const fieldContainer = document.createElement('div')
-            fieldContainer.classList.add('singular-task', `task${i}`)
+
+
+
+            let contMini = 'z';
+            if (this.isMinimised[i] === true) { 
+                contMini = 'minimise'
+            }
+            fieldContainer.classList.add('singular-task', `task${i}`, `${contMini}`)
+
             fields.forEach((obj, index) => {
                 const { tag, type, value, className } = obj;
                 let input = document.createElement(tag)
@@ -255,6 +306,7 @@ export class AllTasks {
 
 
                 let minimise = 'z';
+
                 if (this.isMinimised[i] === true) { 
                     minimise = 'minimise'
                 }
