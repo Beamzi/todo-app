@@ -19,6 +19,8 @@ export class Projects {
         });
     }
 
+
+
     clickViewProject(event) {
         getProjects.forEach((project, arrIndex) => {
             if (event.target.classList.contains(`dashboard-project-btn${arrIndex}`)) {
@@ -71,7 +73,7 @@ export class Projects {
                     }
                     taskCard.classListGen(j, input, index, object)
                     let i = j - 1
-                    if (index < 1) taskCard.renderTopbar(topBar, input, i, `project${arrIndex}`)
+                    if (index < 1) taskCard.renderTopbar(topBar, input, i, 'projects', `project${arrIndex}`)
                     taskCard.displayValues(input, index, getProjects[arrIndex][j])
                     fieldContainer.append(input)
                 });

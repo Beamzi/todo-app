@@ -11,6 +11,7 @@ export const dynamicSelectors = () => {
 };
 
 export const staticSelectors = {
+    dashboard: document.querySelector('.dashboard'),
     dashboardContents: document.querySelector('.dashboard__contents'),
     allTasksBtn: document.querySelector('.all-tasks-btn'),
     priorityTasksBtn: document.querySelector('.priorities-btn'),

@@ -30,7 +30,6 @@ button, .save-btn, .submit, ul {
 .all-tasks-text-init {
     background-color: rgba(206, 206, 206, 0.63);
     box-shadow: black 0px 0px 0px 0px;
-
 }
 
 .save-toggle-text, .save-toggle-text-init {
@@ -48,6 +47,20 @@ button, .save-btn, .submit, ul {
     background-color: rgb(134, 255, 109);
 }
 
+
+
+html, body {
+    overflow: hidden;
+}
+
+/*
+body {
+    overflow-y: scroll; 
+}
+    */
+
+
+
 html, body {
     margin: 0;
     padding: 0;
@@ -55,6 +68,7 @@ html, body {
     font-size: 100%;
     font-family: monospace;
     line-height: 1.5;
+
 }
 
 ol, ul {
@@ -93,6 +107,9 @@ p, span {
     justify-content: center;
     padding-top: 30px;
     padding-bottom: 30px;
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
     >* {
         border: 3px rgba(255, 255, 255, 0) solid;
         margin: 5px;
@@ -116,6 +133,8 @@ p, span {
     }
 }
 
+
+
 .priority-tasks-active, .all-tasks-active {
     background-color: black;
     color: white;
@@ -129,14 +148,69 @@ p, span {
     height: 100vh;
 }
 
+
+
 .dashboard__contents {
+    min-width: 300px !important;
+    width: 600px !important;
+
+    position: relative;
     background-color: white;
-    width: 500px;
+    max-width: calc(100% - 30px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    box-shadow: 10px 10px 500px 200px;
+
+    .all-tasks__container, .project__container {
+        width: calc(100%);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        height: 80vh;
+        overflow-y: auto; 
+        &::-webkit-scrollbar {
+            width: 10px; /* Scrollbar width */
+            height: 10px; /* Scrollbar height (for horizontal) */
+        }
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.253); /* Color of the thumb */
+            border-radius: 20px; /* Rounded corners */
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent; /* Background of the track */
+        }
+
+        
+        scrollbar-gutter: stable both-edges;
+        /*
+        scrollbar-gutter: stable both-edges; */
+
+
+
+
+    }
+    .view-title {
+        margin: 20px;
+        width: 100%;
+        padding: 25px 0px 25px 0px;
+        text-align: center;
+
+
+    }
+    hr {
+        border: none;
+        width: 70%;
+        height: 0.1px;
+        background-color: rgb(153, 153, 153);;
+        opacity: 0.2;
+    }
 }
+
 
 .emptyPriorities, .empty-all-tasks {
     text-align: center;
@@ -151,20 +225,6 @@ p, span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.dashboard__contents {
-    box-shadow: 10px 10px 500px 200px;
-    .view-title {
-        margin: 20px;
-    }
-    hr {
-        border: none;
-        width: 70%;
-        height: 0.1px;
-        background-color: rgb(153, 153, 153);;
-        opacity: 0.2;
-    }
 }
 
 
@@ -223,24 +283,42 @@ p, span {
 }
 
 
+.all-remove-icons, .all-minimise-icons {
+    pointer-events: none;
+    position: relative;
+}
+
+.minimise {
+    display: none;
+
+}
+
 .singular-task, .singular-project-task {
+
+
+    position: relative;
     box-shadow: 0px 0px 1px 1px;
-    width: 100%;
-    width: 100% !important;
     display: flex;
     flex-wrap: wrap;
+    min-width: 80%;
+    max-width: 80%;
+    border: 3px red solid;
+
     :nth-child(-n + 4) {
         flex-basis: 100%; 
     }
+    padding-bottom: 0px;
+    padding: 20px;
+
+
     :nth-child(n + 5) {
         flex-basis: calc(50% - 10px)
     }
-    padding: 20px;
-    padding-bottom: 20px;
+
+
 
     .all-tasks-text, .field3, .field4 {
         padding: 10px;
-        width: 100%;
         margin: 4px;
         border-radius: 7px;
         border-style: none;
@@ -339,11 +417,60 @@ p, span {
     padding-left: 5px;
     box-shadow: 0px 0px 1px 1px;
     display: flex;
+}
+.all-tasks-remove-btn, .all-tasks-minimise-btn {
+    max-width: 50px;
+    height: 30px
 
 }
-.all-tasks-remove-btn {
-    max-width: 100px;
-    height: 30px
+
+.project-wrapper {
+    .project-list-icon {
+        position: relative;
+        max-width: 15px;
+        max-height: 15px;
+        top: 6.5px;
+        margin-right: 3px;
+    }
+    .assigned-icon {
+        position: relative;
+        max-width: 20px;
+
+        top: 5px;
+    }
+    display: flex;
+    flex-direction: row;
+}
+
+.active-list-icon {
+    position: relative;
+    animation: ease forwards 0.3s list-open
+}
+
+@keyframes list-open {
+    100% {
+        transform: rotate(90deg);
+        top: 10px;
+    }
+}
+
+.closed-list-icon {
+    animation: ease forwards 0.15s list-closed
+
+}
+
+@keyframes list-closed {
+    0% {
+        transform: rotate(90deg);
+        top: 10px;
+
+
+    }
+    100% {
+        transform: rotate(0deg);
+        
+
+    }
 }
 
 
@@ -388,12 +515,34 @@ p, span {
     100% {
         max-height: 100%;
 
-    background-color: black;
-    color: white;
+    color: rgb(156, 156, 156);
 
     }
     
 }
+
+.assigned-task {
+    color: rgb(156, 156, 156);
+    animation: ease forwards 0.3s assigned-text ;
+}
+.assigned-init {
+    color: rgb(156, 156, 156);
+}
+
+@keyframes assigned-text {
+    0% {
+        opacity: 0;
+        transform: translateX(-2em);
+
+
+    }
+    100% {
+        opacity: 1;
+
+
+    }
+}
+
 
 
 .expand-list > * {
@@ -404,13 +553,11 @@ p, span {
 @keyframes expand-items {
     0% {
         transform: scaleY(0);
-        background-color: rgba(0, 0, 0, 0);
 
 
     }
     100% {
     transform: scaleY(1);
-    background-color: black;
 
 
 
@@ -420,13 +567,18 @@ p, span {
 
 /*drop down buttons*/
 .all-projects-menu {
+    position: relative;
+    right: 20px;
+    top: 12px;
     text-align: start;
+    box-shadow: black 1px 1px 10px 1px;
     width: 100%;
-    padding: 5px;
-    margin-top: 2px;
-
-
+    padding: 8px;
+    margin-top: 3px;
 }
+
+
+
 
 
 

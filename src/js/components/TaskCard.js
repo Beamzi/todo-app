@@ -21,11 +21,13 @@ export class TaskCard {
 
     topBar() {
         return [
-            { tag: 'ul', className: 'all-tasks-projects', textContent: 'projects', type: 'button',  value: 'projects' },
-            { tag: 'button', className: 'all-tasks-remove-btn', textContent: 'remove', type: 'button', value: 'remove' },
+            { tag: 'ul', className: 'all-tasks-projects', type: 'button',  value: 'projects' },
+            {tag: 'button', type: 'button', value: 'minimise', innerHTML: '<i class="fa-solid fa-window-maximize minimise-icon"></i>', className: 'all-tasks-minimise-btn'},
+            { tag: 'button', className: 'all-tasks-remove-btn', innerHTML: '<i class="fa-solid fa-xmark remove-icon"></i>', type: 'button', value: 'remove' },
         ]
     }
 
+    
     classListGen(i, input, index, obj) {
         const { tag, type, value, className } = obj;
         let fieldClass
@@ -39,28 +41,51 @@ export class TaskCard {
         if (getPriorityData[i] && tag === 'button') {
             input.classList.add('made-priority', `made-priority${i}`)
         };
+        if (tag !== 'div' && type !== 'text' ) input.classList.add( `minimise-fields-${i}`)
     }
 
-    renderTopbar(topBar, input, i, section) {
+    renderTopbar(topBar, input, i, textEvent, section, iconClass) {
+
+        let projectWrapper = document.createElement('div')
+        projectWrapper.classList.add('project-wrapper')
+        projectWrapper.innerHTML = `<i class="fa-solid fa-angle-right project-list-icon icon-of-list-${i}"></i>`
+
         topBar.forEach((obj, index) => {
-            const { tag, className, value, textContent, type } = obj;
+            const { tag, className, value, type, innerHTML } = obj;
             let topBarBtn = document.createElement(tag)
-            if (value) topBarBtn.value = value
-            if (value === 'remove') {
-                topBarBtn.classList.add(className, `removeBtn${i}`, `${section}-remove-btn-${i}`) 
-            }
-            if (value === 'projects') topBarBtn.classList.add(className, `project-list${i}`)
-            topBarBtn.textContent = textContent;
             topBarBtn.type = type;
-            input.append(topBarBtn)
+
+            topBarBtn.classList.add(className)
+
+            if (innerHTML) topBarBtn.innerHTML = innerHTML
+            if (value) topBarBtn.value = value
+
+            if (value === 'projects') topBarBtn.classList.add(`project-list${i}`)
+            if (tag === 'ul') topBarBtn.innerHTML = textEvent
+
+            if (value === 'remove') {
+                topBarBtn.classList.add(`removeBtn${i}`, `${section}-remove-btn-${i}`)
+                topBarBtn.innerHTML = `<i class="fa-solid fa-xmark remove-icon-${i} all-remove-icons"></i>`
+            }
+            if (value === 'minimise') {
+                topBarBtn.classList.add(`minimise-btn-${i}`, `${section}-minimise-btn-${i}`)
+                topBarBtn.innerHTML = `<i class="fa-solid fa-window-maximize minimise-icon-${i} all-minimise-icons"></i>`
+            }
+
+            projectWrapper.append(topBarBtn)
+            if (tag === 'ul') {
+                input.prepend(projectWrapper)
+            }
+            else input.append(topBarBtn)
+           // input.append(topBarBtn)
         });
     }
 
     displayValues(input, index, getArray) {
-            const { title, date, details } = getArray;
-            let array = [ 'topBar', title, date, details, 'save' ];
-            input.placeholder = array[index];
-            input.value = array[index]
+        const { title, date, details } = getArray;
+        let array = [ 'topBar', title, date, details, 'save'];
+        input.placeholder = array[index];
+        input.value = array[index]
     }
 
     domInit(reference, viewTitle) {
@@ -76,7 +101,6 @@ export class TaskCard {
 
 
     clickSave(arrIndex) {
-
         const save = document.querySelectorAll('.save-btn')
         save.forEach((btn, index) => {
             const fields = document.querySelectorAll(`.task${index} > *`)

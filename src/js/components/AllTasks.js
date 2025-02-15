@@ -10,72 +10,147 @@ const taskCard = new TaskCard
 export class AllTasks {
     constructor() {
         this.references = [];
-        this.dashboardContents = staticSelectors.dashboardContents;
+        this.txtAssigned = [];
+        this.dashboardContents = staticSelectors.dashboard;
         // Ensure the listener is only attached once
+    }
+
+    delegate() {
         if (!this.dashboardContents.__listenerAttached) {
             this.dashboardContents.addEventListener('click', (event) => {
+                this.clickAllTasks(event)
                 this.clickProjects(event)
             });
             this.dashboardContents.__listenerAttached = true; // Mark as attached
         };
     }
 
+    clickAllTasks(event) {
+        if (event.target.classList.contains('all-tasks-btn')) {
+            this.classToggle();
+            domRemove.checkEmpty();
+            this.noTasks();
+            domRemove.containerRemove();
+
+            this.tasksList();
+
+
+
+            this.assigned();
+
+            // this.clickProjectInList()
+         }
+ 
+
+    }
+
     clickProjects(event) {
         getData.forEach((fas, index) => {
             if (event.target.classList.contains(`project-list${index}`)) {
                 this.renderProjectList(event.target, index);
-                this.expandProjects(event.target)
-                this.clickProjectInList(index)
-                
-              //event.stopPropagation()
+                this.expandProjects(event.target, index)
+                this.clickProjectInList(index, event.target)
+                this.assignProjectTask(index)
+                //event.stopPropagation()
+                console.log(sharedIndex)
             };
+            if (event.target.classList.contains(`minimise-btn-${index}`)) {
+                this.minimiseTask(event, index)
+            }
+
+          //this.um(index, event)
         });
     }
 
-    clickProjectIfSaved() {
+    minimiseTask(event, index) {
+        event.target.classList.toggle(`minimise-btn-${index}-is-minimised`)
+        const fieldsToMinimise = document.querySelectorAll(`.minimise-fields-${index}`)
+        fieldsToMinimise.forEach((element, index) => {
+            element.classList.toggle('minimise')
+        })
+    }
 
+    tasksList() {
+        const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
+        this.renderFields(taskCard.fields(), taskCard.topBar(), allTasks)
+        this.clickMakePriority();
+        taskCard.clickSave();
+        this.removeTask();
+     };
+
+
+    assigned() {
+        getData.forEach((obj, index) => {
+            sharedIndex.forEach((value, i) => {
+                if (sharedIndex[i].includes(index)) {
+                    const listIcon = document.querySelector('.project-list-icon')
+                //    const listIcon = document.querySelector(`.icon-of-list-${index}`)
+                    if (listIcon) {
+                        console.log(listIcon, 'listIcon', index, 'index')
+                        listIcon.classList.remove('fa-angle-right', 'project-list-icon')
+                        listIcon.classList.add('fa-check', 'assigned-icon')
+                        const projectList = document.querySelector(`.project-list${index}`)
+                        projectList.classList.add('assigned-init')
+                    }
+                }
+            });
+        });
+    }
+
+    assignedTrans(index) {
+        const projectList = document.querySelector(`.project-list${index}`)
+        projectList.classList.add('assigned-task')
+    }
+
+    assignProjectTask(index) {
+        sharedIndex.forEach((value, i) => {
+            const project = document.querySelector(`.project-${i}-of-list-${index}`)
+            if (sharedIndex[i].includes(index)) {
+             //   project.disabled = true
+                project.style['background-color'] = 'red'
+                const projectList = document.querySelector(`.project-list${index}`)
+                projectList.disabled = true
+                projectList.textContent = `Assigned to ${sharedIndex[i][0]}`
+            }
+        });
     }
 
 
-
-
-
-
-
-
-    clickProjectInList(index) {
+    clickProjectInList(index, projects) {
             //index from getData in clickProjects
         for (let j = 0; j < getProjects.length; j++) {
             const projectOfList = document.querySelector(`.project-${j}-of-list-${index}`)
             if (projectOfList) {
                 projectOfList.addEventListener('click', (event) => {
-
                     getProjects[j].push(getData[index])
                     sharedIndex[j].push(index)
 
-
-                                    //    sharedIndex[j] = [getProjects[j][0]]
-
-                    
-                  //  sharedIndex.push([getProjects[j][0], index])
-
-                 //   console.log(sharedIndex[j][index], 'sharedIndex[j][index]')
-                    
-                    console.log(sharedIndex, 'sharedIndex')
-
-                    console.log(getProjects, 'getProjects alltasks')
-                    
+                    //this.expandProjects(projects, index)
+                   // console.log(index, 'index')
 
 
-
+                    domRemove.containerRemove();
+                     this.tasksList();
+                    this.assigned();
+                    this.assignedTrans(index)
                 });
-            };
-        };
+            }
+        }
     }
 
-    expandProjects(projects) {
+    expandProjects(projects, index) {
         projects.classList.toggle('expand-list')
+        const listIcon = document.querySelector(`.icon-of-list-${index}`)
+        const allIcons = document.querySelector('.project-list-icon')
+
+        if (allIcons) {
+            // Toggle between active and closed states
+            const isActive = listIcon.classList.toggle('active-list-icon');
+            listIcon.classList.toggle('closed-list-icon', !isActive);
+        }
     }
+
+
 
 
     renderProjectList(projectList, index) {
@@ -90,10 +165,10 @@ export class AllTasks {
             console.log(string)
             subBtn.textContent = string
             subBtn.value = getProjects[i]
-            subBtn.classList.add(`project-${i}-of-list-${index}`, 'all-projects-menu')
+            subBtn.classList.add(`project-${i}-of-list-${index}`, 'all-projects-menu', `project-${i}`)
             projectList.append(subLi)
             subLi.append(subBtn)
-        })
+        });
     }
 
     resetProjectList() {
@@ -102,6 +177,7 @@ export class AllTasks {
         });
         this.references = [];
     }
+
 
 
     removeTask() {
@@ -140,25 +216,12 @@ export class AllTasks {
                     if (index < sharedIndex[arr][i]) {
                         sharedIndex[arr][i] -= 1
                     }
-                } 
+                }
             }
         }
     }
 
 
-
-    clickAllTasks() {
-        const allTasksBtn = document.querySelector('.all-tasks-btn');
-        allTasksBtn.addEventListener('click', (e) => {
-            this.classToggle();
-            domRemove.checkEmpty();
-            this.noTasks();
-            domRemove.containerRemove();
-            this.tasksList();
-           // this.clickProjectInList()
-        });
-    }
-    
     clickMakePriority() {
         const makePriority = document.querySelectorAll('.makePriority')
         makePriority.forEach((btn, index) => {
@@ -173,57 +236,9 @@ export class AllTasks {
         });
     }
 
-    clickSave() {
-        const save = document.querySelectorAll('.save-btn')
-        save.forEach((btn, index) => {
-            const fields = document.querySelectorAll(`.task${index} > *`)
-            fields.forEach((field, index) => {
-                field.addEventListener('click', () => {
-                    if (index > 0 && index <= 3) {
-                        btn.classList.remove('save-btn-init')
-                        field.classList.remove('all-tasks-text-init')
-                    };
-                });
-            });
-            btn.addEventListener('click', (event) => {
-                btn.value = 'saved'
-                btn.classList.add('save-btn-click', 'save-animation')
-                let obj = {}
-                event.preventDefault()
-                const fields = document.querySelectorAll(`.task${index} > *`)
-                fields.forEach((field, index) => {
-                    let keys = ['top-bar', 'title', 'date', 'details']
-                    if (index > 0 && index <= 3) {
-                        obj[keys[index]] = field.value
-                        field.classList.add('save-toggle-text')
-                        field.addEventListener('click', () => {
-                            field.classList.remove('save-toggle-text')
-                            btn.classList.remove('save-btn-click')
-                        });
-                    };
-                });
-
-                getData[index] = obj
-                console.log(getData)
-                console.log(getProjects)
-
-                const madePriority = document.querySelector(`.made-priority${index}`)
-                if (madePriority) {
-                    madePriority.click();
-                };
-            });
-        });
-    };
 
 
-    tasksList() {
-       const allTasks = taskCard.domInit('all-tasks__container', 'All Tasks');
-       this.renderFields(taskCard.fields(), taskCard.topBar(), allTasks)
-       this.clickMakePriority();
-       taskCard.clickSave();
-       this.removeTask();
 
-    };
 
 
     renderFields(fields, topBar, allTasks) {
@@ -237,9 +252,14 @@ export class AllTasks {
                 if (tag === 'button') input.textContent = 'Make Priority';
                 if (type) input.type = type
                 taskCard.classListGen(i, input, index, obj)
-                if (index < 1) taskCard.renderTopbar(topBar, input, i)
+                this.txtAssigned[0] = 'projects'
+                sharedIndex.forEach((arr, j) => {
+                    if (sharedIndex[j].includes(i)) {
+                        this.txtAssigned[0] = `Assigned to ${sharedIndex[j][0]}`
+                    }                
+                });
+                if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0])
                 taskCard.displayValues(input, index, getData[i])
-
                 fieldContainer.append(input)
             });
             domRemove.checkEmpty();
@@ -248,15 +268,12 @@ export class AllTasks {
         };
     }
 
-
-
     classToggle() {
         const priorityTasksBtn = document.querySelector('.priorities-btn')
         priorityTasksBtn.classList.remove('priority-tasks-active')
         const allTasksBtn = document.querySelector('.all-tasks-btn')
         allTasksBtn.classList.add('all-tasks-active')
     }
-
 
     noTasks() {
        // const singularTask = document.querySelector('.singular-task')
@@ -267,4 +284,4 @@ export class AllTasks {
         <p>get started by clicking New Task</p>`;
         dashboard.append(allTasksEmpty)
     };
-};
+}
