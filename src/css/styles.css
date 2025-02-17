@@ -21,6 +21,8 @@ button, .save-btn, .submit, ul {
     cursor:pointer
 }
 
+
+
 .all-tasks-text {
     color: rgb(92, 92, 92);
     box-shadow: rgb(214, 214, 214) 0px 0px 1px 1px;
@@ -48,7 +50,7 @@ button, .save-btn, .submit, ul {
 
 
 html, body {
-    overflow: hidden;
+   /* overflow: hidden; */
 }
 
 /*
@@ -169,44 +171,56 @@ p, span {
         flex-direction: column;
         justify-content: start;
         align-items: center;
+        min-height: 80vh;
         height: 80vh;
-        overflow-y: auto; 
+        overflow-y: auto;
+
         &::-webkit-scrollbar {
-            width: 10px; /* Scrollbar width */
-            height: 10px; /* Scrollbar height (for horizontal) */
+            width: 10px; 
+            height: 10px; 
         }
         &::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.253); /* Color of the thumb */
-            border-radius: 20px; /* Rounded corners */
+            background: rgba(0, 0, 0, 0.253); 
+            border-radius: 20px; 
         }
         &::-webkit-scrollbar-track {
-            background: transparent; /* Background of the track */
+            background: transparent; 
         }
-
-        
         scrollbar-gutter: stable both-edges;
-        /*
-        scrollbar-gutter: stable both-edges; */
-
-
-
-
     }
-    .view-title {
-        margin: 20px;
-        width: 100%;
-        padding: 25px 0px 25px 0px;
-        text-align: center;
+}
 
 
-    }
-    hr {
-        border: none;
-        width: 70%;
-        height: 0.1px;
-        background-color: rgb(153, 153, 153);;
-        opacity: 0.2;
-    }
+
+.title-container {
+    position: sticky; 
+    padding: 25px 0px 25px 45px;
+
+    top: 0;
+    height: 60px;
+    z-index: 4;
+    backdrop-filter: blur(10px);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    z-index: 4;
+}
+.view-title {
+    height: 60px;
+    width: 100%;
+    text-align: start;
+
+}
+
+hr {
+    position: relative;
+    top: 5px !important;
+    height: 1px;
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.089);
 }
 
 
@@ -292,19 +306,37 @@ p, span {
 }
 @keyframes container-animation {
     0% {
-        opacity: 0.5;
-        height: 100%;
+        height: 430px;
+
     }
     100% {
-        opacity: 1;
-        height: 16.5%;
-        filter: blur(1)
+       /* height: 16.5%; */
+
+        height: 121px;
+    }
+}
+
+.cont-anima-open {
+    animation: ease forwards 0.2s container-open
+}
+@keyframes container-open {
+    0% {
+        height: 121px;
+    }
+    100% {
+        height: 430px;
     }
 }
 
 .minimise {
     display: none;
 }
+
+.container-minimise {
+    height: 121px !important;
+}
+
+
 
 .mini-anima-close {
     animation: ease forwards 0.2s mini-close
@@ -333,7 +365,9 @@ p, span {
     }
 }
 
-
+.task0, .project-task0 {
+    margin-top: 30px !important;
+}
 
 
 .singular-task, .singular-project-task {
@@ -347,6 +381,7 @@ p, span {
     min-width: 80%;
     max-width: 80%;
     margin-bottom: 30px;
+    height: 430px;
 
     :nth-child(-n + 4) {
         flex-basis: 100%; 
@@ -449,9 +484,17 @@ p, span {
 /* this is really important */
 .made-priority, .made-priority-init {
     box-shadow: red 0px -0px 3px 1px;
+}
+
+
+button {
 
 }
 
+.projects-unassigned:hover {
+    color: rgb(59, 255, 33);
+
+}
 
 
 
@@ -460,13 +503,20 @@ p, span {
     height: 30px;
     border-radius: 7px;
     margin: 4px;
+    box-shadow: 0px 0px 0px 0px;
     padding-left: 5px;
-    box-shadow: 0px 0px 1px 1px;
     display: flex;
 }
 .all-tasks-remove-btn, .all-tasks-minimise-btn {
+
+    border: none;
+    border-radius: 5px;
     max-width: 50px;
-    height: 30px
+    height: 30px;
+    margin-left: 5px;
+    &:hover {
+        opacity: 0.5;
+    }
 
 }
 
@@ -521,14 +571,19 @@ p, span {
 
 
 
+
+
+
+
+/*must come before expand list*/
 .all-tasks-projects {
     text-align: start;
-
     display: flex;
     flex-direction: column;
-
-    max-height: 500px;
-    z-index: 1000;
+    max-height: 30px;
+    position: relative;
+    top: 3px;
+    z-index: 2;
 }
 
 .all-tasks-projects > * {
@@ -536,17 +591,9 @@ p, span {
 }
 
 
-/*must come before expand list*/
-.all-tasks-projects {
-    max-height: 30px;
-    position: relative;
-    top: 3px;
-    z-index: 10000 !important;
-}
-
 .expand-list {
     animation: ease forwards 0.3s expand-list ;
-     z-index: 10000 !important;
+     z-index: 2;
 }
 
 .expand-list-items {

@@ -33,7 +33,7 @@ export class AllTasks {
             domRemove.containerRemove();
             this.tasksList();
             this.assigned();
-         }
+        }
     }
 
     clickProjects(event) {
@@ -47,36 +47,19 @@ export class AllTasks {
                 console.log(sharedIndex)
             };
             if (event.target.classList.contains(`minimise-btn-${index}`)) {
-                this.miniIcon(index)
+                this.miniIconSwitch(index)
 
                 this.minimiseTask(event, index)
             };
         });
     }
 
-    
-    miniIcon(index) {
+
+    miniIconSwitch(index) {
         const icon = document.querySelector(`.minimise-icon-${index}`)
-
-        /*
-        if (icon.classList.contains('fa-window-maximize')) {
-            icon.classList.add('fa-window-minimize')
-            icon.classList.remove('fa-window-maximize')
-        }
-        else if (icon.classList.contains('fa-window-minimize')) {
-            icon.classList.add('fa-window-maximize')
-            icon.classList.remove('fa-window-minimize')
-        } */
-
-
         const mini = icon.classList.toggle('fa-window-minimize')
-        icon.classList.toggle('fa-window-maximize', !mini)
-        
+        icon.classList.toggle('fa-window-maximize', !mini)  
     }
-
-    
-
-
     
     minimiseTask(event, index) {
         this.miniContainer(index)
@@ -103,15 +86,24 @@ export class AllTasks {
 
     miniContainer(index) {
         const container = document.querySelector(`.task${index}`)
-        if (container.classList.contains('minimise') && !container.classList.contains('container-anima')) {
-            container.classList.remove('minimise')
+        if (container.classList.contains('container-minimise') && !container.classList.contains('container-anima')) {
             this.isMinimised[index] = false
+            container.classList.remove('container-minimise')
+            container.classList.add('cont-anima-open')
+
         }
 
     else {
         container.classList.toggle('container-anima')
-            if (container.classList.contains('container-anima')) this.isMinimised[index] = true
-            else  this.isMinimised[index] = false
+            if (container.classList.contains('container-anima')) {
+                this.isMinimised[index] = true
+                container.classList.remove('cont-anima-open')
+            }
+            else { 
+                this.isMinimised[index] = false
+                container.classList.add('cont-anima-open')
+
+            }
         }
 
     }
@@ -159,6 +151,7 @@ export class AllTasks {
                 project.style['background-color'] = 'red'
                 const projectList = document.querySelector(`.project-list${index}`)
                 projectList.disabled = true
+                projectList.classList.remove('projects-unassigned')
                 projectList.textContent = `Assigned to ${sharedIndex[i][0]}`
             }
         });
@@ -241,7 +234,7 @@ export class AllTasks {
             }
         });
     }
-
+    //controlled scope
     unassignTaskTrace(index) {
         for (let arr = 0; arr < sharedIndex.length; arr++) {
             if (sharedIndex[arr].includes(index)) {
@@ -254,7 +247,7 @@ export class AllTasks {
             }
         }
     }
-
+    //controlled scope
     adjustIndices(index) {
         for (let arr = 0; arr < sharedIndex.length; arr++) {
             for (let i = 0; i < sharedIndex[arr].length; i++) {
@@ -294,8 +287,9 @@ export class AllTasks {
 
             let contMini = 'z';
             if (this.isMinimised[i] === true) { 
-                contMini = 'minimise'
+                contMini = 'container-minimise'
             }
+
             fieldContainer.classList.add('singular-task', `task${i}`, `${contMini}`)
 
             fields.forEach((obj, index) => {
@@ -306,16 +300,17 @@ export class AllTasks {
 
 
                 let minimise = 'z';
+                let miniIcon = 'fa-window-maximize'
 
                 if (this.isMinimised[i] === true) { 
                     minimise = 'minimise'
+                    miniIcon = 'fa-window-minimize'
                 }
                 
                 
                 taskCard.classListGen(i, input, index, obj, minimise)
                 console.log(minimise)
                 console.log(this.isMinimised)
-                console.log(this.onOff)
 
 
                 this.txtAssigned[0] = 'projects'
@@ -325,7 +320,7 @@ export class AllTasks {
                     }
                 });
 
-                if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0])
+                if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0], 'alltasks', miniIcon)
 
                 taskCard.displayValues(input, index, getData[i])
                 fieldContainer.append(input)

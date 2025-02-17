@@ -44,7 +44,7 @@ export class TaskCard {
         if (tag !== 'div' && type !== 'text' ) input.classList.add(`minimise-fields-${i}`, `${minimised}`)
     }
 
-    renderTopbar(topBar, input, i, textEvent, section) {
+    renderTopbar(topBar, input, i, textEvent, section, miniIcon) {
 
         let projectWrapper = document.createElement('div')
         projectWrapper.classList.add('project-wrapper')
@@ -60,7 +60,7 @@ export class TaskCard {
             if (innerHTML) topBarBtn.innerHTML = innerHTML
             if (value) topBarBtn.value = value
 
-            if (value === 'projects') topBarBtn.classList.add(`project-list${i}`)
+            if (value === 'projects') topBarBtn.classList.add(`project-list${i}`, 'projects-unassigned')
             if (tag === 'ul') topBarBtn.innerHTML = textEvent
 
             if (value === 'remove') {
@@ -69,7 +69,7 @@ export class TaskCard {
             }
             if (value === 'minimise') {
                 topBarBtn.classList.add(`minimise-btn-${i}`, `${section}-minimise-btn-${i}`)
-                topBarBtn.innerHTML = `<i class="fa-solid fa-window-maximize minimise-icon-${i} all-minimise-icons"></i>`
+                topBarBtn.innerHTML = `<i class="fa-solid ${miniIcon} minimise-icon-${i} all-minimise-icons"></i>`
             }
 
             projectWrapper.append(topBarBtn)
@@ -93,8 +93,8 @@ export class TaskCard {
         const container = document.createElement('div')
         container.classList.add(reference)
         container.innerHTML = `
-        <h3 class="view-title">${viewTitle}</h3>
-        <hr>`
+        <div class="title-container">
+        <h3 class="view-title">${viewTitle}</h3><hr></div`
         contents.prepend(container)
         return container
     }
@@ -136,7 +136,7 @@ export class TaskCard {
 
                 if (allTasksContainer) {
                     getData[index] = obj
-
+                    //controlled scope
                     for (let arr = 0; arr < sharedIndex.length; arr++) {
                         if (sharedIndex[arr].includes(index)) {
                             for (let j = 0; j < sharedIndex[arr].length; j++) {
