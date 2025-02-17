@@ -17,17 +17,19 @@
                 </section>
                 <section class="dashboard">
                     <div class="dashboard__sidebar">
-                        <button class="new-task-btn dashboard-buttons">New Task</button>
-                        <button class='all-tasks-btn dashboard-buttons'>All Tasks</button>
-                        <button class='priorities-btn dashboard-buttons'>Priority Tasks
+                        <button class="new-task-btn dashboard-buttons"><i class="fa-solid fa-plus"></i>New Task</button>
+                        <button class='all-tasks-btn dashboard-buttons'><i class="fa-regular fa-circle-check"></i>All Tasks</button>
+                        <button class='priorities-btn dashboard-buttons'><i class="fa-regular fa-star"></i>Priority
                         </button>
 
                         <div class="dashboard__sidebar__projects">
                             <button class="project-list-trigger" aria-expanded="false" aria-controls="projects-list">Projects
+                            <i class="fa-solid fa-angle-down project-list-trigger-icon"></i>
                             </button>
                             <ul class="projects-list">
+
                             </ul>
-                            <button class="create-new-project" type="button">Create New Project</button>
+                            <button class="create-new-project" type="button"><i class="fa-solid fa-plus"></i>Create New Project</button>
                         </div>
 
 
@@ -35,6 +37,8 @@
 
                     </div>
                     <div class="dashboard__contents">
+                        <div class="dashboard__contents-overlay"></div>
+
                     </div>
                     <div class="dashboard__utilities">
                     </div>

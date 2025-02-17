@@ -91,7 +91,6 @@ export class Projects {
         const newProjectBtn = document.querySelector('.create-new-project')
         newProjectBtn.addEventListener('click', (e) => {
             this.newProjectfields()
-            e.target.style['background-color'] = 'red';
         });
     }
 
@@ -121,16 +120,17 @@ export class Projects {
         let btnText = getProjects[getProjects.length - 1]
         let projectList = [
             { tag: 'li' },
-            { tag: 'button', textContent: btnText },
+            { tag: 'button', innerHTML: `<i class="fa-solid fa-angle-right"></i><span>${btnText}</span><i class="fa-solid fa-ellipsis-vertical"></i>` },
         ];
         let li
         let btn
         for (let object of projectList) {
-            const { tag, textContent } = object
+            const { tag, textContent, innerHTML } = object
             if (tag === 'li') li = document.createElement(tag)
-            if (textContent) {
+            if (innerHTML) {
                 btn = document.createElement(tag)
-                btn.textContent = textContent
+               // btn.textContent = textContent
+                btn.innerHTML = innerHTML
                 btn.classList.add('dashboard-project-btns', `dashboard-project-btn${getProjects.length - 1}` )
             };
         }

@@ -59,3 +59,7 @@ add an undo button after a task has been removed - think deletion array that sto
 
 
 figure out why assigned is triggering other project boxes
+
+
+
+UGRENT -- need to synchronise isMinimised array with the sharedIndex array, removing tasks will apply minimised to incorrect tasks when adding new tasks thereafter (this is only noticeble when removing adn then adding tasks)

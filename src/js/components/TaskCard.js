@@ -6,7 +6,7 @@ import { allTasksBtn } from "./EventManager";
 const domRemove = new DOMRemove
 
 export class TaskCard {
-    constructor() {
+    constructor() {   
     }
     fields() {
         return [
@@ -44,25 +44,23 @@ export class TaskCard {
         if (tag !== 'div' && type !== 'text' ) input.classList.add(`minimise-fields-${i}`, `${minimised}`)
     }
 
-    renderTopbar(topBar, input, i, textEvent, section, miniIcon) {
+   // projectsIcon, assign 
+    // fa-angle-right
 
+    renderTopbar(topBar, input, i, textEvent, section, miniIcon, projectsIcon, assign) {
         let projectWrapper = document.createElement('div')
         projectWrapper.classList.add('project-wrapper')
-        projectWrapper.innerHTML = `<i class="fa-solid fa-angle-right project-list-icon icon-of-list-${i}"></i>`
-
+        projectWrapper.innerHTML = `<i class="fa-solid ${projectsIcon} project-list-icon icon-of-list-${i}"></i>`
         topBar.forEach((obj, index) => {
             const { tag, className, value, type, innerHTML } = obj;
             let topBarBtn = document.createElement(tag)
             topBarBtn.type = type;
 
             topBarBtn.classList.add(className)
-
             if (innerHTML) topBarBtn.innerHTML = innerHTML
             if (value) topBarBtn.value = value
-
-            if (value === 'projects') topBarBtn.classList.add(`project-list${i}`, 'projects-unassigned')
+            if (value === 'projects') topBarBtn.classList.add(`project-list${i}`, `${assign}`)
             if (tag === 'ul') topBarBtn.innerHTML = textEvent
-
             if (value === 'remove') {
                 topBarBtn.classList.add(`removeBtn${i}`, `${section}-remove-btn-${i}`)
                 topBarBtn.innerHTML = `<i class="fa-solid fa-xmark remove-icon-${i} all-remove-icons"></i>`
@@ -71,7 +69,6 @@ export class TaskCard {
                 topBarBtn.classList.add(`minimise-btn-${i}`, `${section}-minimise-btn-${i}`)
                 topBarBtn.innerHTML = `<i class="fa-solid ${miniIcon} minimise-icon-${i} all-minimise-icons"></i>`
             }
-
             projectWrapper.append(topBarBtn)
             if (tag === 'ul') {
                 input.prepend(projectWrapper)

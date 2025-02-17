@@ -13,6 +13,10 @@ export class AllTasks {
         this.references = [];
         this.txtAssigned = [];
         this.isMinimised = [];
+
+        this.projectsIcon = [];
+        this.assign = []
+
     }
 
     delegate() {
@@ -32,17 +36,18 @@ export class AllTasks {
             this.noTasks();
             domRemove.containerRemove();
             this.tasksList();
-            this.assigned();
+          //  this.assigned();
         }
     }
 
     clickProjects(event) {
         getData.forEach((fas, index) => {
             if (event.target.classList.contains(`project-list${index}`)) {
+
                 this.renderProjectList(event.target, index);
                 this.expandProjects(event.target, index)
                 this.clickProjectInList(index, event.target)
-                this.assignProjectTask(index)
+                //this.assignProjectTask(index)
                 //event.stopPropagation()
                 console.log(sharedIndex)
             };
@@ -105,10 +110,7 @@ export class AllTasks {
 
             }
         }
-
     }
-
-    
 
 
     tasksList() {
@@ -143,19 +145,6 @@ export class AllTasks {
         projectList.classList.add('assigned-task')
     }
 
-    assignProjectTask(index) {
-        sharedIndex.forEach((value, i) => {
-            const project = document.querySelector(`.project-${i}-of-list-${index}`)
-            if (sharedIndex[i].includes(index)) {
-             //   project.disabled = true
-                project.style['background-color'] = 'red'
-                const projectList = document.querySelector(`.project-list${index}`)
-                projectList.disabled = true
-                projectList.classList.remove('projects-unassigned')
-                projectList.textContent = `Assigned to ${sharedIndex[i][0]}`
-            }
-        });
-    }
 
     clickProjectInList(index, projects) {
             //index from getData in clickProjects
@@ -165,18 +154,29 @@ export class AllTasks {
                 projectOfList.addEventListener('click', (event) => {
                     getProjects[j].push(getData[index])
                     sharedIndex[j].push(index)
+                    this.assignProjectTask(index)
 
-                    //this.expandProjects(projects, index)
-                   // console.log(index, 'index')
-
-
-                    domRemove.containerRemove();
-                    this.tasksList();
-                    this.assigned();
-                    this.assignedTrans(index)
                 });
             }
         }
+    }
+
+    assignProjectTask(index) {
+        sharedIndex.forEach((value, i) => {
+            if (sharedIndex[i].includes(index)) {
+                const projectList = document.querySelector(`.project-list${index}`)
+                projectList.textContent = `Assigned to ${sharedIndex[i][0]}`
+                projectList.classList.remove('projects-unassigned')
+                this.assign[0] = 'projects-assigned'
+                projectList.classList.add(this.assign[0])
+
+                const icon = document.querySelector(`.icon-of-list-${index}`)
+                icon.classList.add('fa-check')
+                icon.classList.remove('fa-angle-right', 'active-list-icon')
+
+               projectList.disabled = true
+            }
+        });
     }
 
     expandProjects(projects, index) {
@@ -306,6 +306,9 @@ export class AllTasks {
                     minimise = 'minimise'
                     miniIcon = 'fa-window-minimize'
                 }
+
+
+
                 
                 
                 taskCard.classListGen(i, input, index, obj, minimise)
@@ -313,14 +316,23 @@ export class AllTasks {
                 console.log(this.isMinimised)
 
 
+
+                this.projectsIcon[0] = 'fa-angle-right'
+                this.assign[0] = `projects-unassigned`
                 this.txtAssigned[0] = 'projects'
+
                 sharedIndex.forEach((arr, j) => {
                     if (sharedIndex[j].includes(i)) {
                         this.txtAssigned[0] = `Assigned to ${sharedIndex[j][0]}`
+                        this.projectsIcon[0] = 'fa-check'
+                        this.assign[0] = 'projects-assigned-state-change';
                     }
                 });
 
-                if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0], 'alltasks', miniIcon)
+
+
+
+                if (index < 1) taskCard.renderTopbar(topBar, input, i, this.txtAssigned[0], 'alltasks', miniIcon, this.projectsIcon[0], this.assign[0])
 
                 taskCard.displayValues(input, index, getData[i])
                 fieldContainer.append(input)
